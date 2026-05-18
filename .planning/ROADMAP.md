@@ -28,7 +28,11 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
   3. Usuário Google fora da whitelist (`usuarios_permitidos.ativo=true`) é bloqueado antes de acessar o app.
   4. Banco Supabase tem todas as migrations aplicadas e a tabela `usuarios_permitidos` contém ao menos um admin ativo.
   5. Variáveis de ambiente Supabase estão configuradas no Vercel e cada push em `main` dispara deploy automático.
-**Plans**: TBD
+**Plans:** 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Provisionar Supabase + Google OAuth + Vercel (manual provisioning gates)
+- [ ] 01-02-PLAN.md — Validar wiring env vars + verificação end-to-end do fluxo OAuth
 
 ### Phase 2: Visual Overhaul (Pruma Design System)
 **Mode:** mvp
@@ -48,7 +52,7 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure & Auth | 0/0 | Not started | - |
+| 1. Infrastructure & Auth | 0/2 | In progress | - |
 | 2. Visual Overhaul (Pruma Design System) | 0/0 | Not started | - |
 
 ## Coverage
@@ -70,4 +74,4 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
 - Granularidade `coarse` aplicada deliberadamente: prazo é amanhã, escopo é fixo, scaffold já existe. Dividir em mais fases adiciona overhead sem ganho de clareza.
 
 ---
-*Last updated: 2026-05-17 at creation*
+*Last updated: 2026-05-17 after Phase 1 planning*
