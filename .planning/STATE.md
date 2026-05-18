@@ -1,85 +1,77 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: Migração Supabase → Neon + Next.js
+milestone_name: "Migra\xE7\xE3o Supabase → Neon + Next.js"
 status: planning
-last_updated: "2026-05-18T21:31:19.740Z"
+last_updated: "2026-05-18"
 last_activity: 2026-05-18
 progress:
-  total_phases: 0
+  total_phases: 4
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
   percent: 0
 ---
 
-# State: We Clínica — Sistema Financeiro
+# State: We Clinica -- Sistema Financeiro
 
-**Last updated:** 2026-05-17
+**Last updated:** 2026-05-18
 
 ## Project Reference
 
-- **Project**: We Clínica — Sistema Financeiro
-- **Core Value**: Gestores da We Clínica conseguem visualizar e gerenciar as finanças da clínica em tempo real, sem planilhas.
-- **Mode**: mvp
+- **Project**: We Clinica -- Sistema Financeiro
+- **Core Value**: Gestores da We Clinica conseguem visualizar e gerenciar as financas da clinica em tempo real, sem planilhas.
 - **Granularity**: coarse
-- **Deadline**: 2026-05-18 (apresentação ao cliente)
-- **Current Focus**: Phase 1 — Infrastructure & Auth
+- **Current Focus**: Phase 3 -- Foundation (Next.js + Neon + Drizzle)
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-05-18 — Milestone v2.0 started
+Phase: 3 of 6 (Foundation)
+Plan: --
+Status: Ready to plan
+Last activity: 2026-05-18 -- v2.0 roadmap created (4 phases, 27 requirements mapped)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
 | Metric | Value |
 |--------|-------|
-| Phases planned | 2 |
-| Phases complete | 0 |
-| v1 requirements | 15 |
-| Requirements mapped | 15 (100%) |
+| v2.0 phases planned | 4 (Phases 3-6) |
+| v2.0 phases complete | 0 |
+| v2.0 requirements | 27 |
+| Requirements mapped | 27 (100%) |
 | Requirements complete | 0 |
 
 ## Accumulated Context
 
 ### Decisions
 
-- Use Pruma design system (navy `#0D1B4B` + cyan `#00AEEF`, Barlow + Inter) — replaces existing inline verde/bege palette.
-- Google OAuth only via Supabase, no email/password, no public signup — admin manages whitelist via `usuarios_permitidos`.
-- Vercel + Supabase native integration — env vars injected automatically.
-- Logo da We Clínica como placeholder de texto até o cliente fornecer arquivo.
-- Phase 1 prioriza fluxo funcional de auth (AUTH-02/03/04); Phase 2 entrega a casca visual (AUTH-01/05 + DSYS-*).
+- Supabase descartado em favor de Neon PostgreSQL (DB) + NextAuth (Auth). Motivacao: independencia de provider, type-safety com Drizzle, server actions nativos.
+- Vite SPA substituido por Next.js App Router. Server actions eliminam necessidade de API separada.
+- Drizzle ORM (nao Prisma). Leve, SQL-like, excelente com Neon serverless driver.
+- Banco limpo -- schema recriado com Drizzle migrations, sem migracao de dados.
+- Phase 4 entrega auth como vertical slice completo (funcional + visual), diferente de v1.0 que separou.
 
 ### Todos
 
-- [x] Phase 1 plan criado — 2 planos, 2 waves.
-- [ ] Executar Phase 1 — rodar `/gsd:execute-phase 1`.
-- [ ] Phase 2 plan TBD após Phase 1 executada.
+- [ ] Planejar Phase 3 -- `/gsd:plan-phase 3`
+- [ ] Executar Phase 3 -- provisionar Next.js + Neon + Drizzle + Vercel
 
 ### Blockers
 
-- Nenhum no momento. Phase 1 vai exigir ações manuais do usuário em Supabase, Google Cloud Console e Vercel — Claude pausa nesses gates.
-
-### External Dependencies (manual gates)
-
-- Criar projeto Supabase (dashboard.supabase.com).
-- Criar OAuth client no Google Cloud Console.
-- Criar projeto Vercel e conectar ao repo Git.
-- Inserir primeiro admin em `usuarios_permitidos` (Supabase SQL editor).
+- Neon database precisa ser provisionado (console.neon.tech) -- gate externo.
+- Google OAuth credentials precisam ser recriadas para o novo dominio Next.js.
 
 ## Session Continuity
 
-- **Last action**: Phase 1 planned (2 plans, 2 waves — verification passed).
-- **Next action**: `/gsd:execute-phase 1` para provisionar infra e validar OAuth.
+- **Last action**: v2.0 roadmap criado com 4 fases (Phases 3-6), 27 requirements mapeados.
+- **Next action**: `/gsd:plan-phase 3` para planejar Foundation.
 - **Files of interest**:
-  - `.planning/PROJECT.md`
-  - `.planning/REQUIREMENTS.md`
-  - `.planning/ROADMAP.md`
-  - `src/lib/auth.js`, `src/hooks/useAuth.jsx` (auth code existente)
-  - `design-system/MASTER.md` (tokens Pruma)
+  - `.planning/ROADMAP.md` -- roadmap v2.0
+  - `.planning/REQUIREMENTS.md` -- 27 requirements v2.0
+  - `.planning/PROJECT.md` -- contexto atualizado para v2.0
+  - `design-system/MASTER.md` -- tokens Pruma
 
 ---
-*State initialized: 2026-05-17 after roadmap creation*
+*State updated: 2026-05-18 after v2.0 roadmap creation*

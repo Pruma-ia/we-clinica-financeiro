@@ -1,84 +1,119 @@
 # Roadmap: We Clínica — Sistema Financeiro
 
 **Created:** 2026-05-17
-**Mode:** mvp
 **Granularity:** coarse
 **Core Value:** Gestores da We Clínica conseguem visualizar e gerenciar as finanças da clínica em tempo real, de qualquer lugar, sem depender de planilhas.
-**MVP Deadline:** TOMORROW (2026-05-18) — apresentação ao cliente.
 
-## Strategy
+## Milestones
 
-Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho crítico para o MVP: provisionar infra + auth do zero (Phase 1) e em paralelo/sequência aplicar o design system Pruma sobre o que já existe (Phase 2). Coverage 100% — 15 de 15 requirements v1 mapeados.
+- [x] **v1.0 MVP** - Phases 1-2 (shipped 2026-05-18)
+- [ ] **v2.0 Migração Supabase → Neon + Next.js** - Phases 3-6 (in progress)
 
 ## Phases
+
+<details>
+<summary>v1.0 MVP (Phases 1-2) - SHIPPED 2026-05-18</summary>
 
 - [x] **Phase 1: Infrastructure & Auth** — Supabase + Vercel provisionados, Google OAuth end-to-end funcional com whitelist (completed 2026-05-18)
 - [ ] **Phase 2: Visual Overhaul (Pruma Design System)** — Tailwind instalado, tokens Pruma aplicados em login, sidebar, layout e componentes
 
+</details>
+
+### v2.0 Migração Supabase → Neon + Next.js
+
+**Milestone Goal:** Reescrever aplicação de Vite SPA + Supabase para Next.js App Router + Neon PostgreSQL (Drizzle), mantendo todos os módulos financeiros existentes e aplicando Pruma design system.
+
+- [ ] **Phase 3: Foundation** — Next.js + Neon + Drizzle configurados, schema aplicado, deploy Vercel com CI/CD
+- [ ] **Phase 4: Auth** — NextAuth com Google OAuth, whitelist, middleware de proteção de rotas, telas de login e acesso negado
+- [ ] **Phase 5: Design System** — Tailwind + tokens Pruma, componentes UI refatorados, sidebar, layout responsivo
+- [ ] **Phase 6: Module Port** — 15 módulos financeiros portados com server actions, business logic, filtro de período e audit log
+
 ## Phase Details
 
-### Phase 1: Infrastructure & Auth
-**Mode:** mvp
-**Goal**: Sistema deployado no Vercel com banco Supabase operacional e usuário admin conseguindo logar via Google OAuth com whitelist ativa.
-**Depends on**: Nothing (first phase)
-**Requirements**: INFRA-01, INFRA-02, INFRA-03, INFRA-04, INFRA-05, AUTH-02, AUTH-03, AUTH-04
+### Phase 3: Foundation
+**Goal**: Projeto Next.js App Router rodando em dev e em produção no Vercel, conectado ao Neon PostgreSQL via Drizzle, com schema completo aplicado e CI/CD funcional.
+**Depends on**: Nothing (first phase of v2.0 milestone)
+**Requirements**: INFRA-01, INFRA-02, INFRA-03, INFRA-04, INFRA-05, INFRA-06, DB-01, DB-02, DB-03
 **Success Criteria** (what must be TRUE):
-  1. Admin consegue abrir a URL pública do Vercel e ver a tela de login servida (deploy live).
-  2. Admin consegue clicar em "Continuar com Google", autenticar, e cair logado na home do app — sessão persistindo após refresh do navegador.
-  3. Usuário Google fora da whitelist (`usuarios_permitidos.ativo=true`) é bloqueado antes de acessar o app.
-  4. Banco Supabase tem todas as migrations aplicadas e a tabela `usuarios_permitidos` contém ao menos um admin ativo.
-  5. Variáveis de ambiente Supabase estão configuradas no Vercel e cada push em `main` dispara deploy automático.
-**Plans:** 2/2 plans complete
+  1. Desenvolvedor abre `localhost:3000` e vê a aplicação Next.js rodando (página inicial renderiza sem erros)
+  2. Drizzle migrations estão aplicadas no Neon e todas as tabelas do schema existem no banco (lancamentos, prestadores, comissoes, clientes, plano_contas, premissas, usuarios_permitidos, audit_log)
+  3. App está acessível via URL pública do Vercel com build passando
+  4. Push em `main` dispara deploy automático e PRs geram preview deploys no Vercel
+  5. Tabela `usuarios_permitidos` contém ao menos um admin com `ativo=true`
+**Plans**: TBD
 
-Plans:
-**Wave 1:**
-- [x] 01-01-PLAN.md — Provisionar Supabase + Google OAuth + Vercel (manual provisioning gates)
-
-**Wave 2** *(blocked on Wave 1 completion)*:
-- [x] 01-02-PLAN.md — Validar wiring env vars + verificação end-to-end do fluxo OAuth
-
-**Cross-cutting constraints:**
-- Supabase Auth URL config must include Vercel production URL (wired across waves)
-- .env.local must be populated before Wave 2 executes
-
-### Phase 2: Visual Overhaul (Pruma Design System)
-**Mode:** mvp
-**Goal**: Toda a aplicação visível ao usuário (login, sidebar, layout principal, componentes base) reflete a identidade Pruma (navy + cyan, Barlow + Inter) — substituindo o palette verde/bege inline atual.
-**Depends on**: Phase 1
-**Requirements**: DSYS-01, DSYS-02, DSYS-03, DSYS-04, DSYS-05, AUTH-01, AUTH-05
+### Phase 4: Auth
+**Goal**: Usuários autorizados conseguem acessar o sistema via Google OAuth; não autorizados são bloqueados com feedback visual claro.
+**Depends on**: Phase 3
+**Requirements**: AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06, AUTH-07
 **Success Criteria** (what must be TRUE):
-  1. Tela de login mostra fundo navy gradient + card glassmorphism + botão "Continuar com Google" estilizado conforme Pruma (sem traços do palette verde/bege antigo).
-  2. Sidebar exibe fundo navy `--sidebar`, texto claro, item ativo em accent cyan; PageHeader e PeriodoBar consomem os mesmos tokens.
-  3. Componentes base (`Btn`, `Card`, `Badge`, `Kpi`, `Field`, `Modal`, `Pill`, `Drawer`) renderizam usando classes Tailwind + tokens Pruma — sem inline styles de cor hardcoded restantes.
-  4. Usuário Google não autorizado vê a tela "Acesso Negado" estilizada com tokens Pruma (não a versão default).
-  5. Build de produção Vite/Tailwind passa sem erros e o deploy no Vercel reflete o novo visual.
+  1. Usuário clica em "Continuar com Google" na tela de login (estilizada Pruma com navy gradient e glassmorphism), completa OAuth consent, e é redirecionado para o dashboard com sessão ativa
+  2. Sessão persiste após refresh do navegador (usuário não precisa logar novamente)
+  3. Usuário com email fora da whitelist (`usuarios_permitidos.ativo=true`) vê a tela "Acesso Negado" estilizada com Pruma
+  4. Qualquer rota autenticada redireciona para `/login` quando acessada sem sessão ativa (middleware Next.js)
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 5: Design System
+**Goal**: Toda a interface usa tokens Pruma via Tailwind -- sidebar, layout, componentes base e estrutura responsiva desktop-first prontos para receber os módulos financeiros.
+**Depends on**: Phase 4
+**Requirements**: DSYS-01, DSYS-02, DSYS-03, DSYS-04, DSYS-05, DSYS-06
+**Success Criteria** (what must be TRUE):
+  1. Sidebar renderiza com fundo navy `#0D1B4B`, texto claro, item ativo com accent cyan `#00AEEF` -- identidade Pruma inequivoca
+  2. Componentes UI base (Btn, Card, Badge, Kpi, Field, Modal, Pill, Drawer) renderizam usando classes Tailwind com tokens Pruma -- zero inline styles de cor hardcoded
+  3. PeriodoBar e PageHeader consomem tokens Pruma e funcionam como shell do layout
+  4. Layout responsivo desktop-first funciona sem overflow em viewports 1024px+
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 6: Module Port
+**Goal**: Todos os 15 módulos financeiros existentes estão acessiveis como páginas Next.js -- os 5 implementados (Dashboard, Lançamentos, Comissões, Prestadores, Admin) com CRUD funcional via server actions, e os 9 stub como placeholders.
+**Depends on**: Phase 5
+**Requirements**: MOD-01, MOD-02, MOD-03, MOD-04, MOD-05
+**Success Criteria** (what must be TRUE):
+  1. Usuário navega pela sidebar e acessa todos os 15 módulos -- os 5 implementados (Dashboard, Lançamentos, Comissões, Prestadores, Admin) mostram dados reais e permitem CRUD completo
+  2. Os 9 módulos stub (DRE, Fluxo Caixa, Contas, Vendas, Plano Contas, Ciclo Financeiro, Conciliação, Clientes, Premissas) renderizam como placeholder com descrição do módulo
+  3. Filtro global de período (PeriodoBar) filtra dados server-side em todos os módulos implementados
+  4. Operações CRUD geram registros no audit_log (fire-and-forget)
+  5. Business logic (calcComissao, datas, formatters) produz os mesmos resultados da versão anterior (pure functions portadas 1:1)
 **Plans**: TBD
 **UI hint**: yes
 
 ## Progress
 
-| Phase | Plans Complete | Status | Completed |
-|-------|----------------|--------|-----------|
-| 1. Infrastructure & Auth | 2/2 | Complete   | 2026-05-18 |
-| 2. Visual Overhaul (Pruma Design System) | 0/0 | Not started | - |
+**Execution Order:** Phases execute in numeric order: 3 → 4 → 5 → 6
+
+| Phase | Milestone | Plans Complete | Status | Completed |
+|-------|-----------|----------------|--------|-----------|
+| 1. Infrastructure & Auth | v1.0 | 2/2 | Complete | 2026-05-18 |
+| 2. Visual Overhaul | v1.0 | 0/0 | Not started | - |
+| 3. Foundation | v2.0 | 0/0 | Not started | - |
+| 4. Auth | v2.0 | 0/0 | Not started | - |
+| 5. Design System | v2.0 | 0/0 | Not started | - |
+| 6. Module Port | v2.0 | 0/0 | Not started | - |
 
 ## Coverage
 
-- v1 requirements total: 15
-- Mapped: 15
+- v2.0 requirements total: 27
+- Mapped: 27
 - Orphaned: 0
-- Coverage: 100% ✓
+- Coverage: 100%
 
 | Phase | Requirements |
 |-------|--------------|
-| Phase 1 | INFRA-01, INFRA-02, INFRA-03, INFRA-04, INFRA-05, AUTH-02, AUTH-03, AUTH-04 (8) |
-| Phase 2 | DSYS-01, DSYS-02, DSYS-03, DSYS-04, DSYS-05, AUTH-01, AUTH-05 (7) |
+| Phase 3 | INFRA-01, INFRA-02, INFRA-03, INFRA-04, INFRA-05, INFRA-06, DB-01, DB-02, DB-03 (9) |
+| Phase 4 | AUTH-01, AUTH-02, AUTH-03, AUTH-04, AUTH-05, AUTH-06, AUTH-07 (7) |
+| Phase 5 | DSYS-01, DSYS-02, DSYS-03, DSYS-04, DSYS-05, DSYS-06 (6) |
+| Phase 6 | MOD-01, MOD-02, MOD-03, MOD-04, MOD-05 (5) |
 
 ## Notes
 
-- AUTH-01 e AUTH-05 vivem em Phase 2 porque são primariamente entregas visuais (telas estilizadas com tokens Pruma). O fluxo funcional de OAuth e o gate de whitelist (AUTH-02/03/04) ficam em Phase 1 — login pode estar feio mas precisa funcionar antes do design polish.
-- Phase 1 tem dependências externas (Supabase dashboard, Google Cloud Console, Vercel UI) que exigem ação manual do usuário. Claude executa o que for possível via tooling e pausa nos gates de UI externa.
-- Granularidade `coarse` aplicada deliberadamente: prazo é amanhã, escopo é fixo, scaffold já existe. Dividir em mais fases adiciona overhead sem ganho de clareza.
+- Phase numbering continues from v1.0 (Phases 1-2). v2.0 starts at Phase 3.
+- Phase 3 absorbs both INFRA and DB categories because Drizzle schema/migrations are inseparable from the Neon + Next.js foundation setup. They form a single delivery boundary: "project boots and database exists."
+- Phase 4 owns all AUTH requirements including visual ones (AUTH-02 login page, AUTH-07 AcessoNegado) because auth cannot be verified without those screens. Unlike v1.0 which split functional/visual auth, v2.0 delivers auth as a complete vertical slice.
+- Phase 5 depends on Phase 4 (not just Phase 3) because the login and AcessoNegado pages from Phase 4 establish Pruma visual patterns that Phase 5 generalizes to the full UI.
+- Phase 6 is the largest user-facing phase but also the most mechanical: porting existing patterns from Supabase hooks to Drizzle server actions. Business logic is already validated as pure functions.
+- Coarse granularity (4 phases) is appropriate: each phase delivers one complete, verifiable capability with clear boundaries.
 
 ---
-*Last updated: 2026-05-17 after Phase 1 planning*
+*Last updated: 2026-05-18 after v2.0 roadmap creation*
