@@ -1,14 +1,15 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: milestone
-status: unknown
-last_updated: "2026-05-18T17:50:46.013Z"
+milestone: v2.0
+milestone_name: Migração Supabase → Neon + Next.js
+status: planning
+last_updated: "2026-05-18T21:31:19.740Z"
+last_activity: 2026-05-18
 progress:
-  total_phases: 2
+  total_phases: 0
   completed_phases: 0
-  total_plans: 2
-  completed_plans: 1
+  total_plans: 0
+  completed_plans: 0
   percent: 0
 ---
 
@@ -27,18 +28,10 @@ progress:
 
 ## Current Position
 
-Phase: 01 (infrastructure-auth) — EXECUTING
-Plan: 1 of 2
-
-- **Phase**: 1 — Infrastructure & Auth
-- **Plan**: 2 plans in 2 waves — ready to execute
-- **Status**: Planned
-- **Progress**: ░░░░░░░░░░ 0% (0/2 phases)
-
-```
-Phase 1 [█░░░░░░░░░] 10% — Infrastructure & Auth (planned)
-Phase 2 [          ] 0%  — Visual Overhaul (Pruma Design System)
-```
+Phase: Not started (defining requirements)
+Plan: —
+Status: Defining requirements
+Last activity: 2026-05-18 — Milestone v2.0 started
 
 ## Performance Metrics
 

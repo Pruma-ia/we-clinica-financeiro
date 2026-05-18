@@ -8,64 +8,73 @@ Sistema financeiro privado para a We Clínica (clínica médica). Painel web Saa
 
 Gestores da We Clínica conseguem visualizar e gerenciar as finanças da clínica em tempo real, de qualquer lugar, sem depender de planilhas.
 
+## Current Milestone: v2.0 Migração Supabase → Neon + Next.js
+
+**Goal:** Reescrever aplicação de Vite SPA + Supabase para Next.js App Router + Neon PostgreSQL (Drizzle), mantendo todos os módulos financeiros existentes e aplicando Pruma design system.
+
+**Target features:**
+- Next.js App Router project setup (substituindo Vite SPA)
+- Neon PostgreSQL database com Drizzle ORM (schema limpo)
+- NextAuth (Auth.js v5) com Google OAuth + whitelist (`usuarios_permitidos`)
+- Pruma design system aplicado em toda UI (login, sidebar, layout, componentes)
+- Todos os 15 módulos financeiros portados
+- Deploy na Vercel com Neon Marketplace integration
+
 ## Requirements
 
 ### Validated
 
 - ✓ Estrutura de módulos financeiros (Dashboard, Lançamentos, DRE, Fluxo de Caixa, Contas, Comissões, Prestadores, Vendas, Plano de Contas, Ciclo Financeiro, Conciliação, Auditoria, Admin) — scaffold existente
-- ✓ Google OAuth via Supabase com whitelist (`usuarios_permitidos`) — código existente em `src/lib/auth.js`
+- ✓ Google OAuth com whitelist (`usuarios_permitidos`) — fluxo validado em v1.0 Phase 1
 - ✓ Filtro global de período (PeriodoBar) — existente
-- ✓ RLS no banco (Row Level Security) — arquitetado
 - ✓ Audit log — existente em `src/lib/audit.js`
+- ✓ Lógica de negócio em `src/utils/` (calcComissao, datas, formatters) — pure functions, portáveis
 
 ### Active
 
-- [ ] Criar projeto Supabase e configurar Google OAuth provider (projeto do zero)
-- [ ] Criar projeto Vercel e conectar ao repositório (deploy do zero)
-- [ ] Configurar variáveis de ambiente (SUPABASE_URL, SUPABASE_ANON_KEY) no Vercel
-- [ ] Primeiro usuário criado manualmente na tabela `usuarios_permitidos` no Supabase
-- [ ] Aplicar identidade visual Pruma (tokens de cor navy/cyan, fontes Barlow + Inter, Tailwind) em toda a aplicação — substituindo inline styles e constantes de cor atuais
-- [ ] Tela de login estilizada com Pruma design system (logo We Clínica como texto por enquanto)
-- [ ] Sidebar e layout principal aplicando tokens Pruma
-- [ ] Deploy funcional no Vercel com Google login operacional
+(Defined in REQUIREMENTS.md for v2.0)
 
 ### Out of Scope
 
 - Cadastro público de usuários — sistema privado, admin adiciona manualmente
-- Dark mode — não solicitado para MVP
+- Dark mode — não solicitado
 - Logo da We Clínica em arquivo — placeholder texto até o cliente fornecer o arquivo
 - Mobile first — desktop first conforme Pruma design system
+- Migração de dados — banco limpo, sem dados legados
+- Supabase RLS — substituído por middleware auth + server-side validation
 
 ## Context
 
-**Codebase existente:** React + Vite SPA já scaffolded com 15 rotas/módulos. Todo o código de negócio existe mas usa inline styles com palette verde/bege (`#0F6E56`, `#F3F2ED`) que precisa ser substituída pela Pruma (navy `#0D1B4B` + cyan `#00AEEF`).
+**Codebase existente:** React + Vite SPA com 15 rotas/módulos. Código de negócio em `src/utils/` é portável (pure functions). Hooks (`src/hooks/use*.js`) usam `supabase.from()` — todos precisam ser reescritos para Drizzle queries via server actions. Inline styles com palette verde/bege precisam ser substituídos por Pruma tokens via Tailwind.
 
-**Design system:** `design-system/MASTER.md` define tokens CSS, componentes shadcn/ui, Tailwind semântico. Existem docs de components (buttons, forms, tables, modals, etc.) em `design-system/components/`.
+**Design system:** `design-system/MASTER.md` define tokens CSS, componentes shadcn/ui, Tailwind semântico. Docs de components em `design-system/components/`.
 
-**Infraestrutura:** Supabase e Vercel ainda não criados. Precisam ser provisionados do zero antes do primeiro deploy funcional.
+**Migração v1.0 → v2.0:** Supabase (DB + Auth) descartado em favor de Neon PostgreSQL (DB) + NextAuth (Auth). Motivação: independência de provider, Drizzle type-safety, server actions nativos do Next.js. Banco limpo — schema recriado com Drizzle migrations.
 
-**Cliente:** We Clínica (@weclinica.jipa no Instagram). MVP para apresentar amanhã — prazo fixo.
+**Cliente:** We Clínica (@weclinica.jipa no Instagram).
 
-**Auth flow:** Login com Google → Supabase verifica se email está em `usuarios_permitidos` com `ativo=true` → acesso liberado. Fluxo já codificado em `src/hooks/useAuth.jsx` e `src/lib/auth.js`.
-
-**Preferência do dono do projeto:** Máxima autonomia — Claude executa, usuário só age quando há necessidade de UI externa (Supabase dashboard, Google Cloud Console, Vercel). Nenhum asset visual criado sem aprovação prévia.
+**Preferência do dono do projeto:** Máxima autonomia — Claude executa, usuário só age quando há necessidade de UI externa (consoles, dashboards). Nenhum asset visual criado sem aprovação prévia.
 
 ## Constraints
 
-- **Timeline**: MVP pronto para amanhã — escopo fixo, sem novas features
 - **Visual**: Usar exclusivamente Pruma design system — não criar assets visuais sem aprovação
 - **Auth**: Google OAuth only — sem email/password
-- **Deploy**: Vercel (frontend) + Supabase (banco + auth) — sem mudança de stack
+- **Deploy**: Vercel (Next.js) + Neon PostgreSQL (Drizzle)
 - **Autonomia**: Usuário não deve precisar rodar comandos no terminal — Claude executa tudo que for possível via ferramentas
+- **Dados**: Banco limpo no Neon — sem migração de dados do Supabase
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Pruma design system em vez de branding próprio da We Clínica | Cliente usa a plataforma Pruma como base, identidade visual unificada | — Pending |
-| Google OAuth only, sem signup público | Sistema privado — admin controla acesso manualmente via Supabase dashboard | — Pending |
-| Vercel + Supabase integration nativa | Injeta env vars automaticamente, sem configuração manual de secrets | — Pending |
-| Logo como texto placeholder | Arquivo de logo não disponível ainda — substituir quando cliente fornecer | — Pending |
+| Pruma design system em vez de branding próprio | Cliente usa plataforma Pruma como base, identidade visual unificada | — Pending |
+| Google OAuth only, sem signup público | Sistema privado — admin controla acesso manualmente | ✓ Good (v1.0) |
+| Supabase → Neon PostgreSQL | Independência de provider, type-safety com Drizzle, server actions nativos | — Pending |
+| Vite SPA → Next.js App Router | Server actions eliminam necessidade de API separada, Neon serverless driver direto | — Pending |
+| Drizzle ORM (não Prisma) | Leve, SQL-like, excelente com Neon serverless driver | — Pending |
+| NextAuth (Auth.js v5) | Integração nativa com Next.js App Router, Google provider out of box | — Pending |
+| Banco limpo (sem migração de dados) | Sem dados reais no Supabase, schema recriado com Drizzle | — Pending |
+| Logo como texto placeholder | Arquivo de logo não disponível ainda | — Pending |
 
 ## Evolution
 
@@ -85,4 +94,4 @@ Este documento evolui a cada transição de fase e milestone.
 4. Atualizar Context com estado atual
 
 ---
-*Last updated: 2026-05-17 after initialization*
+*Last updated: 2026-05-18 after milestone v2.0 initialization*
