@@ -1,10 +1,10 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: "Migra\xE7\xE3o Supabase → Neon + Next.js"
+milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: planning
-last_updated: "2026-05-18"
-last_activity: 2026-05-18
+last_updated: "2026-05-18T23:44:51.259Z"
+last_activity: 2026-05-18 -- v2.0 roadmap created (4 phases, 27 requirements mapped)
 progress:
   total_phases: 4
   completed_phases: 0
@@ -28,8 +28,8 @@ progress:
 
 Phase: 3 of 6 (Foundation)
 Plan: --
-Status: Ready to plan
-Last activity: 2026-05-18 -- v2.0 roadmap created (4 phases, 27 requirements mapped)
+Status: Context gathered, ready to plan
+Last activity: 2026-05-18 -- Phase 3 context gathered (14 decisions captured)
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -65,13 +65,13 @@ Progress: [░░░░░░░░░░] 0%
 
 ## Session Continuity
 
-- **Last action**: v2.0 roadmap criado com 4 fases (Phases 3-6), 27 requirements mapeados.
+- **Last action**: Phase 3 context gathered -- 14 decisions captured across 4 areas (estrutura, TypeScript, schema, Neon).
 - **Next action**: `/gsd:plan-phase 3` para planejar Foundation.
 - **Files of interest**:
+  - `.planning/phases/03-foundation/03-CONTEXT.md` -- decisões Phase 3
   - `.planning/ROADMAP.md` -- roadmap v2.0
   - `.planning/REQUIREMENTS.md` -- 27 requirements v2.0
-  - `.planning/PROJECT.md` -- contexto atualizado para v2.0
-  - `design-system/MASTER.md` -- tokens Pruma
+  - `supabase/schema.sql` -- schema de referência para tradução Drizzle
 
 ---
 *State updated: 2026-05-18 after v2.0 roadmap creation*
