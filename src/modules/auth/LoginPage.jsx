@@ -50,7 +50,7 @@ export default function LoginPage() {
           }}
         >
           <GoogleIcon />
-          {carregando ? 'Redirecionando…' : 'Continuar com Google'}
+          {carregando ? 'Abrindo Google…' : 'Continuar com Google'}
         </button>
 
         {erro && (

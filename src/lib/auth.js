@@ -1,12 +1,36 @@
 import { supabase } from './supabase.js'
 
-export const signInWithGoogle = async () => {
-  const redirectTo = window.location.origin
-  const { error } = await supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo },
+export const signInWithGoogle = () => {
+  return new Promise((resolve, reject) => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID
+    const waitForGIS = (attempts = 0) => {
+      if (window.google?.accounts?.id) {
+        window.google.accounts.id.initialize({
+          client_id: clientId,
+          callback: async ({ credential }) => {
+            const { error } = await supabase.auth.signInWithIdToken({
+              provider: 'google',
+              token: credential,
+            })
+            if (error) reject(error)
+            else resolve()
+          },
+        })
+        window.google.accounts.id.prompt((notification) => {
+          if (notification.isNotDisplayed()) {
+            reject(new Error('Pop-up bloqueado. Permita pop-ups para este site e tente novamente.'))
+          } else if (notification.isSkippedMoment()) {
+            reject(new Error('Login cancelado.'))
+          }
+        })
+      } else if (attempts < 10) {
+        setTimeout(() => waitForGIS(attempts + 1), 300)
+      } else {
+        reject(new Error('Google Identity Services não carregou. Recarregue a página.'))
+      }
+    }
+    waitForGIS()
   })
-  if (error) throw error
 }
 
 export const signOut = async () => {
