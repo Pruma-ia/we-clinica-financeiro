@@ -1,5 +1,7 @@
 'use client'
 import { SessionProvider, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { PeriodoProvider } from '../../components/layout/PeriodoBar.jsx'
 import Sidebar from '../../components/layout/Sidebar.jsx'
 import PeriodoBar from '../../components/layout/PeriodoBar.jsx'
@@ -7,8 +9,13 @@ import { AuthProvider } from '../../hooks/useAuth.jsx'
 
 function Shell({ children }) {
   const { data: session, status } = useSession()
+  const router = useRouter()
 
-  if (status === 'loading') {
+  useEffect(() => {
+    if (status === 'unauthenticated') router.replace('/login')
+  }, [status, router])
+
+  if (status === 'loading' || !session) {
     return (
       <div style={{
         minHeight: '100vh', display: 'flex', alignItems: 'center',
@@ -18,8 +25,6 @@ function Shell({ children }) {
       </div>
     )
   }
-
-  if (!session) return null
 
   const perfil = {
     id: session.user.perfilId,
