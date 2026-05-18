@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../lib/supabase.js'
+import { dbSelect } from '../app/actions/db.js'
+import { dbUpsertPremissas } from '../app/actions/db.js'
 
 // Retorna premissas como objeto { chave: numero }.
 export function usePremissas() {
@@ -9,23 +10,18 @@ export function usePremissas() {
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('premissas')
-      .select('chave, valor')
-    if (error) console.error('[premissas]', error)
-    const map = (data || []).reduce((m, r) => (m[r.chave] = +r.valor, m), {})
-    setData(map)
+    try {
+      const rows = await dbSelect('premissas', { select: 'chave,valor' })
+      const map = (rows || []).reduce((m, r) => (m[r.chave] = +r.valor, m), {})
+      setData(map)
+    } catch (e) { console.error('[premissas]', e) }
     setLoading(false)
   }, [])
 
   useEffect(() => { fetchAll() }, [fetchAll])
 
   const upsertMany = async (entries) => {
-    const rows = Object.entries(entries).map(([chave, valor]) => ({
-      chave, valor: +valor, updated_at: new Date().toISOString(),
-    }))
-    const { error } = await supabase.from('premissas').upsert(rows, { onConflict: 'chave' })
-    if (error) throw error
+    await dbUpsertPremissas(entries)
     await fetchAll()
   }
 

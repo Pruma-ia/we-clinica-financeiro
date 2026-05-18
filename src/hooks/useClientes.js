@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../lib/supabase.js'
+import { dbSelect, dbInsert, dbUpdate, dbDelete } from '../app/actions/db.js'
 
 export function useClientes() {
   const [data, setData] = useState([])
@@ -8,35 +8,18 @@ export function useClientes() {
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('clientes')
-      .select('*')
-      .order('nome', { ascending: true })
-    if (error) console.error('[clientes]', error)
-    setData(data || [])
+    try {
+      const rows = await dbSelect('clientes', { order: 'nome', ascending: true })
+      setData(rows || [])
+    } catch (e) { console.error('[clientes]', e) }
     setLoading(false)
   }, [])
 
   useEffect(() => { fetchAll() }, [fetchAll])
 
-  const create = async (payload) => {
-    const { data, error } = await supabase.from('clientes').insert(payload).select().single()
-    if (error) throw error
-    await fetchAll()
-    return data
-  }
-
-  const update = async (id, payload) => {
-    const { error } = await supabase.from('clientes').update(payload).eq('id', id)
-    if (error) throw error
-    await fetchAll()
-  }
-
-  const remove = async (id) => {
-    const { error } = await supabase.from('clientes').delete().eq('id', id)
-    if (error) throw error
-    await fetchAll()
-  }
+  const create = async (payload) => { const row = await dbInsert('clientes', payload); await fetchAll(); return row }
+  const update = async (id, payload) => { await dbUpdate('clientes', id, payload); await fetchAll() }
+  const remove = async (id) => { await dbDelete('clientes', id); await fetchAll() }
 
   return { data, loading, refresh: fetchAll, create, update, remove }
 }

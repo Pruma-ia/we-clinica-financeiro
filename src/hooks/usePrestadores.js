@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../lib/supabase.js'
+import { dbSelect, dbInsert, dbUpdate, dbDelete } from '../app/actions/db.js'
 
 export function usePrestadores() {
   const [data, setData] = useState([])
@@ -8,35 +8,18 @@ export function usePrestadores() {
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('prestadores')
-      .select('*')
-      .order('nome', { ascending: true })
-    if (error) console.error('[prestadores]', error)
-    setData(data || [])
+    try {
+      const rows = await dbSelect('prestadores', { order: 'nome', ascending: true })
+      setData(rows || [])
+    } catch (e) { console.error('[prestadores]', e) }
     setLoading(false)
   }, [])
 
   useEffect(() => { fetchAll() }, [fetchAll])
 
-  const create = async (payload) => {
-    const { data, error } = await supabase.from('prestadores').insert(payload).select().single()
-    if (error) throw error
-    await fetchAll()
-    return data
-  }
-
-  const update = async (id, payload) => {
-    const { error } = await supabase.from('prestadores').update(payload).eq('id', id)
-    if (error) throw error
-    await fetchAll()
-  }
-
-  const remove = async (id) => {
-    const { error } = await supabase.from('prestadores').delete().eq('id', id)
-    if (error) throw error
-    await fetchAll()
-  }
+  const create = async (payload) => { const row = await dbInsert('prestadores', payload); await fetchAll(); return row }
+  const update = async (id, payload) => { await dbUpdate('prestadores', id, payload); await fetchAll() }
+  const remove = async (id) => { await dbDelete('prestadores', id); await fetchAll() }
 
   return { data, loading, refresh: fetchAll, create, update, remove }
 }

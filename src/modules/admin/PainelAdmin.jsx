@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../../lib/supabase.js'
+import { dbListUsuarios, dbInsertUsuario, dbUpdateUsuario, dbDeleteUsuario } from '../../app/actions/db.js'
 import { useAuth } from '../../hooks/useAuth.jsx'
 import { logAcao } from '../../lib/audit.js'
 import PageHeader from '../../components/layout/PageHeader.jsx'
@@ -20,12 +20,12 @@ export default function PainelAdmin() {
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('usuarios_permitidos')
-      .select('*')
-      .order('created_at', { ascending: false })
-    if (error) console.error(error)
-    setLista(data || [])
+    try {
+      const data = await dbListUsuarios()
+      setLista(data || [])
+    } catch (e) {
+      console.error('[admin]', e)
+    }
     setLoading(false)
   }, [])
 
@@ -42,35 +42,40 @@ export default function PainelAdmin() {
       role: drawer.role,
       ativo: !!drawer.ativo,
     }
-    if (drawer.id) {
-      const { error } = await supabase.from('usuarios_permitidos').update(payload).eq('id', drawer.id)
-      if (error) return alert(error.message)
-      await logAcao(perfil, 'Editar', 'Usuário permitido', payload.email)
-    } else {
-      const { error } = await supabase.from('usuarios_permitidos').insert(payload)
-      if (error) return alert(error.message)
-      await logAcao(perfil, 'Criar', 'Usuário permitido', payload.email)
+    try {
+      if (drawer.id) {
+        await dbUpdateUsuario(drawer.id, payload)
+        await logAcao(perfil, 'Editar', 'Usuário permitido', payload.email)
+      } else {
+        await dbInsertUsuario(payload)
+        await logAcao(perfil, 'Criar', 'Usuário permitido', payload.email)
+      }
+    } catch (e) {
+      return alert(e.message)
     }
     setDrawer(null)
     await fetchAll()
   }
 
   const toggleAtivo = async (u) => {
-    const { error } = await supabase
-      .from('usuarios_permitidos')
-      .update({ ativo: !u.ativo })
-      .eq('id', u.id)
-    if (error) return alert(error.message)
-    await logAcao(perfil, u.ativo ? 'Desativar' : 'Ativar', 'Usuário permitido', u.email)
+    try {
+      await dbUpdateUsuario(u.id, { ativo: !u.ativo })
+      await logAcao(perfil, u.ativo ? 'Desativar' : 'Ativar', 'Usuário permitido', u.email)
+    } catch (e) {
+      return alert(e.message)
+    }
     await fetchAll()
   }
 
   const excluir = async (u) => {
     if (u.email === perfil?.email) return alert('Você não pode remover a si mesmo.')
     if (!confirm(`Remover ${u.email} dos usuários autorizados?`)) return
-    const { error } = await supabase.from('usuarios_permitidos').delete().eq('id', u.id)
-    if (error) return alert(error.message)
-    await logAcao(perfil, 'Excluir', 'Usuário permitido', u.email)
+    try {
+      await dbDeleteUsuario(u.id)
+      await logAcao(perfil, 'Excluir', 'Usuário permitido', u.email)
+    } catch (e) {
+      return alert(e.message)
+    }
     await fetchAll()
   }
 

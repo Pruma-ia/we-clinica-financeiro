@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useCallback } from 'react'
-import { supabase } from '../lib/supabase.js'
+import { dbSelect, dbInsert, dbDelete } from '../app/actions/db.js'
 
 export function usePlano() {
   const [data, setData] = useState([])
@@ -8,29 +8,17 @@ export function usePlano() {
 
   const fetchAll = useCallback(async () => {
     setLoading(true)
-    const { data, error } = await supabase
-      .from('plano_contas')
-      .select('*')
-      .order('cod', { ascending: true })
-    if (error) console.error('[plano]', error)
-    setData(data || [])
+    try {
+      const rows = await dbSelect('plano_contas', { order: 'cod', ascending: true })
+      setData(rows || [])
+    } catch (e) { console.error('[plano]', e) }
     setLoading(false)
   }, [])
 
   useEffect(() => { fetchAll() }, [fetchAll])
 
-  const create = async (payload) => {
-    const { data, error } = await supabase.from('plano_contas').insert(payload).select().single()
-    if (error) throw error
-    await fetchAll()
-    return data
-  }
-
-  const remove = async (id) => {
-    const { error } = await supabase.from('plano_contas').delete().eq('id', id)
-    if (error) throw error
-    await fetchAll()
-  }
+  const create = async (payload) => { const row = await dbInsert('plano_contas', payload); await fetchAll(); return row }
+  const remove = async (id) => { await dbDelete('plano_contas', id); await fetchAll() }
 
   return { data, loading, refresh: fetchAll, create, remove }
 }
