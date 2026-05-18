@@ -152,7 +152,11 @@ create policy "perm_select" on usuarios_permitidos
 
 drop policy if exists "perm_admin_write" on usuarios_permitidos;
 create policy "perm_admin_write" on usuarios_permitidos
-  for all using (is_admin()) with check (is_admin());
+  for insert with check (is_admin());
+create policy "perm_admin_update" on usuarios_permitidos
+  for update using (is_admin()) with check (is_admin());
+create policy "perm_admin_delete" on usuarios_permitidos
+  for delete using (is_admin());
 
 -- Demais tabelas: qualquer permitido lê e escreve
 do $$

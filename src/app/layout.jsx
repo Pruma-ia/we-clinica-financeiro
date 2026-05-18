@@ -1,3 +1,5 @@
+import Providers from '../components/Providers.jsx'
+
 export const metadata = {
   title: 'We Clínica · Sistema Financeiro',
 }
@@ -20,7 +22,7 @@ export default function RootLayout({ children }) {
         color: '#1A1918',
         WebkitFontSmoothing: 'antialiased',
       }}>
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
