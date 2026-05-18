@@ -1,35 +1,55 @@
 # Requirements: We Clínica — Sistema Financeiro
 
-**Defined:** 2026-05-17
+**Defined:** 2026-05-18
 **Core Value:** Gestores da We Clínica conseguem visualizar e gerenciar as finanças da clínica em tempo real, de qualquer lugar, sem depender de planilhas.
 
-## v1 Requirements
+## v2.0 Requirements
+
+Requirements for Supabase → Neon + Next.js migration. Each maps to roadmap phases.
 
 ### Infraestrutura
 
-- [ ] **INFRA-01**: Sistema rodando no Vercel com deploy automático ao fazer push no main
-- [ ] **INFRA-02**: Banco de dados Supabase criado e migrations rodadas (tabelas operacionais)
-- [ ] **INFRA-03**: Google OAuth provider habilitado no Supabase com credenciais do Google Cloud Console configuradas
-- [ ] **INFRA-04**: Variáveis de ambiente (SUPABASE_URL, SUPABASE_ANON_KEY) configuradas no Vercel
-- [ ] **INFRA-05**: Primeiro usuário admin criado manualmente na tabela `usuarios_permitidos` com `ativo=true`
-
-### Design System
-
-- [ ] **DSYS-01**: Tailwind CSS instalado e configurado no projeto Vite (com PostCSS)
-- [ ] **DSYS-02**: Tokens CSS Pruma (navy `#0D1B4B` + cyan `#00AEEF`, fontes Barlow + Inter) definidos em `index.css`
-- [ ] **DSYS-03**: Componentes UI existentes (`Btn`, `Card`, `Badge`, `Kpi`, `Field`, `Modal`, `Pill`, `Drawer`) refatorados com classes Tailwind + tokens Pruma (removendo inline styles e constantes de cor hardcoded)
-- [ ] **DSYS-04**: Sidebar com identidade Pruma (fundo navy `--sidebar`, texto claro, accent cyan nos items ativos)
-- [ ] **DSYS-05**: PeriodoBar e PageHeader alinhados aos tokens Pruma
+- [ ] **INFRA-01**: Projeto Next.js App Router inicializado e rodando em dev (localhost:3000)
+- [ ] **INFRA-02**: Neon PostgreSQL database provisioned com connection string
+- [ ] **INFRA-03**: Drizzle ORM configurado com Neon serverless driver (`@neondatabase/serverless`)
+- [ ] **INFRA-04**: Deploy no Vercel com build passando e app acessível via URL pública
+- [ ] **INFRA-05**: Env vars configuradas no Vercel (DATABASE_URL, NEXTAUTH_SECRET, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET)
+- [ ] **INFRA-06**: Push em main dispara deploy automático; PRs geram preview deploys
 
 ### Auth
 
-- [ ] **AUTH-01**: Tela de login com identidade visual Pruma — fundo navy gradient, card glassmorphism semi-transparente, botão "Continuar com Google" (apenas Google, sem email/senha)
-- [ ] **AUTH-02**: Fluxo Google OAuth completo funcionando via Supabase (signInWithOAuth → callback → sessão ativa)
-- [ ] **AUTH-03**: Check de whitelist (`usuarios_permitidos.ativo`) bloqueia usuários Google não autorizados antes de mostrar o app
-- [ ] **AUTH-04**: Sessão persiste após refresh do navegador (sem logout acidental)
-- [ ] **AUTH-05**: Tela de AcessoNegado estilizada com Pruma (exibida quando email não está na whitelist)
+- [ ] **AUTH-01**: NextAuth (Auth.js v5) configurado com Google OAuth provider
+- [ ] **AUTH-02**: Tela de login com identidade Pruma (navy gradient, card glassmorphism, botão Google)
+- [ ] **AUTH-03**: Fluxo Google OAuth completo — click → consent → callback → sessão ativa
+- [ ] **AUTH-04**: Check whitelist (`usuarios_permitidos.ativo=true`) bloqueia não autorizados
+- [ ] **AUTH-05**: Sessão persiste após refresh do navegador
+- [ ] **AUTH-06**: Next.js middleware protege rotas autenticadas (redireciona pra /login)
+- [ ] **AUTH-07**: Tela AcessoNegado estilizada com Pruma quando email não está na whitelist
 
-## v2 Requirements
+### Database & Schema
+
+- [ ] **DB-01**: Schema Drizzle define todas as tabelas (lancamentos, prestadores, comissoes, clientes, plano_contas, premissas, usuarios_permitidos, audit_log, etc.)
+- [ ] **DB-02**: Migrations Drizzle geradas e aplicadas no Neon
+- [ ] **DB-03**: Primeiro admin criado na tabela `usuarios_permitidos` com `ativo=true`
+
+### Design System
+
+- [ ] **DSYS-01**: Tailwind CSS configurado no projeto Next.js com PostCSS
+- [ ] **DSYS-02**: Tokens Pruma (navy `#0D1B4B` + cyan `#00AEEF`, Barlow + Inter) no Tailwind config
+- [ ] **DSYS-03**: Componentes UI refatorados com Tailwind + Pruma (Btn, Card, Badge, Kpi, Field, Modal, Pill, Drawer)
+- [ ] **DSYS-04**: Sidebar com identidade Pruma (fundo navy, texto claro, accent cyan items ativos)
+- [ ] **DSYS-05**: PeriodoBar e PageHeader com tokens Pruma
+- [ ] **DSYS-06**: Layout responsivo base (desktop-first)
+
+### Módulos Financeiros
+
+- [ ] **MOD-01**: Módulos implementados (Dashboard, Lançamentos, Comissões, Prestadores, Admin) portados com CRUD via server actions + Drizzle
+- [ ] **MOD-02**: Módulos stub (DRE, Fluxo Caixa, Contas, Vendas, Plano Contas, Ciclo Financeiro, Conciliação, Clientes, Premissas) como páginas Next.js com placeholder
+- [ ] **MOD-03**: Business logic (calcComissao, datas, formatters) portada 1:1 como utility modules
+- [ ] **MOD-04**: Filtro global de período (PeriodoBar) funcional com queries server-side
+- [ ] **MOD-05**: Audit log portado como server action (fire-and-forget log de operações)
+
+## Future Requirements
 
 ### Identidade Visual Cliente
 
@@ -38,45 +58,38 @@
 
 ### UX
 
-- **UX-01**: Dark mode (não solicitado para MVP)
+- **UX-01**: Dark mode
 - **UX-02**: Animações de transição entre rotas
+
+### Performance
+
+- **PERF-01**: Server-side filtering com paginação (substituir filtro client-side)
+- **PERF-02**: Caching com React Server Components
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| Cadastro público de usuários | Sistema privado — admin adiciona usuários manualmente no Supabase |
+| Cadastro público de usuários | Sistema privado — admin adiciona manualmente |
 | Login com email/senha | Google OAuth only — segurança e simplicidade |
 | Mobile-first / responsive completo | Desktop-first conforme Pruma design system |
-| Logo em arquivo | Arquivo não disponível ainda — v2 quando cliente fornecer |
-| Dark mode | Não solicitado para MVP de amanhã |
-| Novas funcionalidades financeiras | Módulos já existem — MVP foca em infra + visual + auth |
+| Logo em arquivo | Arquivo não disponível ainda |
+| Dark mode | Não solicitado |
+| Migração de dados | Banco limpo no Neon — sem dados legados no Supabase |
+| Supabase RLS | Substituído por middleware auth + server-side validation |
+| Novas funcionalidades financeiras | Módulos existem — v2.0 foca em migração de stack |
 
 ## Traceability
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| INFRA-01 | Phase 1 | Pending |
-| INFRA-02 | Phase 1 | Pending |
-| INFRA-03 | Phase 1 | Pending |
-| INFRA-04 | Phase 1 | Pending |
-| INFRA-05 | Phase 1 | Pending |
-| DSYS-01 | Phase 2 | Pending |
-| DSYS-02 | Phase 2 | Pending |
-| DSYS-03 | Phase 2 | Pending |
-| DSYS-04 | Phase 2 | Pending |
-| DSYS-05 | Phase 2 | Pending |
-| AUTH-01 | Phase 2 | Pending |
-| AUTH-02 | Phase 1 | Pending |
-| AUTH-03 | Phase 1 | Pending |
-| AUTH-04 | Phase 1 | Pending |
-| AUTH-05 | Phase 2 | Pending |
+| (populated during roadmap creation) | | |
 
 **Coverage:**
-- v1 requirements: 15 total
-- Mapped to phases: 15
-- Unmapped: 0 ✓
+- v2.0 requirements: 27 total
+- Mapped to phases: 0
+- Unmapped: 27 ⚠️
 
 ---
-*Requirements defined: 2026-05-17*
-*Last updated: 2026-05-17 after initial definition*
+*Requirements defined: 2026-05-18*
+*Last updated: 2026-05-18 after v2.0 milestone definition*
