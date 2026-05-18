@@ -1,3 +1,4 @@
+'use client'
 import { SUB, BDR } from '../../constants/colors.js'
 
 export default function TH({ cols = [] }) {

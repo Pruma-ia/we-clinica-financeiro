@@ -1,5 +1,6 @@
+'use client'
 import { useState } from 'react'
-import { signInWithGoogle } from '../../lib/auth.js'
+import { signIn } from 'next-auth/react'
 import { COAL, TEAL, TEALL, WHITE, SUB, RED, BDR } from '../../constants/colors.js'
 
 export default function LoginPage() {
@@ -9,7 +10,7 @@ export default function LoginPage() {
   const handleLogin = async () => {
     setErro(''); setCarregando(true)
     try {
-      await signInWithGoogle()
+      await signIn('google', { callbackUrl: '/dashboard' })
     } catch (e) {
       setErro(e?.message || 'Falha ao iniciar login')
       setCarregando(false)
@@ -50,7 +51,7 @@ export default function LoginPage() {
           }}
         >
           <GoogleIcon />
-          {carregando ? 'Abrindo Google…' : 'Continuar com Google'}
+          {carregando ? 'Redirecionando…' : 'Continuar com Google'}
         </button>
 
         {erro && (

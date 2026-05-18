@@ -1,3 +1,4 @@
+'use client'
 import { useState, useMemo } from 'react'
 import { useClientes } from '../../hooks/useClientes.js'
 import { useAuth } from '../../hooks/useAuth.jsx'

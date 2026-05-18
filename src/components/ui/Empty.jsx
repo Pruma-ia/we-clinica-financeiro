@@ -1,3 +1,4 @@
+'use client'
 import { SUB } from '../../constants/colors.js'
 
 export default function Empty({ msg = 'Nenhum registro' }) {

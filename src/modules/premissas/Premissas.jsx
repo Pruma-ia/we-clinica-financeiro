@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react'
 import { usePremissas } from '../../hooks/usePremissas.js'
 import { useAuth } from '../../hooks/useAuth.jsx'

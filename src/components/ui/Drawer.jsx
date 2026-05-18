@@ -1,3 +1,4 @@
+'use client'
 import { WHITE, BDR, TXT, SUB } from '../../constants/colors.js'
 
 export default function Drawer({ open, onClose, title, width = 500, children }) {

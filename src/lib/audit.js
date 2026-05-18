@@ -1,3 +1,4 @@
+'use client'
 import { supabase } from './supabase.js'
 
 // Registra ação no audit_log. Falha silenciosa pra não bloquear UX.

@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect, createContext, useContext } from 'react'
 import { WHITE, BDR, SUB, TEAL, TXT } from '../../constants/colors.js'
 import { mesAtras, mesAtual } from '../../utils/datas.js'

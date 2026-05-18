@@ -1,6 +1,8 @@
-import { NavLink, useNavigate } from 'react-router-dom'
+'use client'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+import { signOut } from 'next-auth/react'
 import { COAL, TEAL, TEALL, SUB, WHITE, BDR } from '../../constants/colors.js'
-import { signOut } from '../../lib/auth.js'
 
 const ITENS = [
   { to: '/dashboard',     icon: '◈', l: 'Dashboard' },
@@ -21,10 +23,10 @@ const ITENS = [
 ]
 
 export default function Sidebar({ perfil }) {
-  const navigate = useNavigate()
+  const pathname = usePathname()
+
   const handleSair = async () => {
-    await signOut()
-    navigate('/login')
+    await signOut({ callbackUrl: '/login' })
   }
 
   const itens = [...ITENS]
@@ -78,20 +80,20 @@ export default function Sidebar({ perfil }) {
         {itens.map((it, i) => it.sep ? (
           <div key={`sep-${i}`} style={{ height: 1, background: '#2E2C2A', margin: '12px 12px' }} />
         ) : (
-          <NavLink
+          <Link
             key={it.to}
-            to={it.to}
-            style={({ isActive }) => ({
+            href={it.to}
+            style={{
               display: 'flex', alignItems: 'center', gap: 12,
               padding: '10px 14px',
               borderRadius: 10,
-              color: isActive ? WHITE : SUB,
-              background: isActive ? '#23211F' : 'transparent',
-              borderLeft: isActive ? `3px solid ${TEAL}` : '3px solid transparent',
+              color: pathname === it.to ? WHITE : SUB,
+              background: pathname === it.to ? '#23211F' : 'transparent',
+              borderLeft: pathname === it.to ? `3px solid ${TEAL}` : '3px solid transparent',
               textDecoration: 'none',
               fontSize: 14,
               marginBottom: 2,
-            })}
+            }}
           >
             <span style={{ fontSize: 14, opacity: .8, width: 16, display: 'inline-block' }}>{it.icon}</span>
             <span style={{ flex: 1 }}>{it.l}</span>
@@ -102,7 +104,7 @@ export default function Sidebar({ perfil }) {
                 padding: '2px 8px', borderRadius: 999,
               }}>{it.badge}</span>
             )}
-          </NavLink>
+          </Link>
         ))}
       </nav>
 

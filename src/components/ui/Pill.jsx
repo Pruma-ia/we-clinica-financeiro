@@ -1,3 +1,4 @@
+'use client'
 import { TEAL, WHITE, BDR, SUB } from '../../constants/colors.js'
 
 export default function Pill({ label, active = false, onClick, style = {} }) {

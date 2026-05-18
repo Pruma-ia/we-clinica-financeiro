@@ -1,10 +1,25 @@
+# deps
 node_modules
+
+# build output
 dist
+.next
+out
+
+# env
 .env
 .env.local
-.DS_Store
-*.log
+.env*.local
+
+# Next.js
+next-env.d.ts
+
+# cache
 .vite
 .vercel
-.env*.local
+*.log
+.DS_Store
+
+# project
 .claude/settings.local.json
+

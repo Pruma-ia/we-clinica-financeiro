@@ -1,3 +1,4 @@
+'use client'
 import { TEAL, RED, WHITE, BDR, TXT, SUB } from '../../constants/colors.js'
 
 const variants = {

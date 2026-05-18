@@ -1,3 +1,4 @@
+'use client'
 import { useState, useMemo } from 'react'
 import { useLancamentos } from '../../hooks/useLancamentos.js'
 import { usePrestadores } from '../../hooks/usePrestadores.js'

@@ -1,3 +1,4 @@
+'use client'
 import ModuloStub from '../_stub/ModuloStub.jsx'
 
 export default function DRE() {

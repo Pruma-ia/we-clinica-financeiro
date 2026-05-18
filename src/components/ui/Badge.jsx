@@ -1,3 +1,4 @@
+'use client'
 import { OK, RED, WARN, SUB, TEAL, BDR } from '../../constants/colors.js'
 
 const palette = {

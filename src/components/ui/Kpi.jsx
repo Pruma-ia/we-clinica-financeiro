@@ -1,3 +1,4 @@
+'use client'
 import { WHITE, BDR, SUB, TXT } from '../../constants/colors.js'
 
 export default function Kpi({ label, value, sub, color = TXT, style = {} }) {

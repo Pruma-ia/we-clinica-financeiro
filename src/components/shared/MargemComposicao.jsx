@@ -1,3 +1,4 @@
+'use client'
 import { SUB, TEAL, RED, BDR, TXT, OK, WARN } from '../../constants/colors.js'
 import { fmtR, fmtP } from '../../utils/formatters.js'
 import { calcM } from '../../utils/calcComissao.js'

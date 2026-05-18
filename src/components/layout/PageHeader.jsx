@@ -1,3 +1,4 @@
+'use client'
 import { TXT, SUB } from '../../constants/colors.js'
 
 export default function PageHeader({ title, sub, actions }) {

@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase.js'
 import PageHeader from '../../components/layout/PageHeader.jsx'

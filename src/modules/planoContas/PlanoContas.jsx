@@ -1,3 +1,4 @@
+'use client'
 import { useState } from 'react'
 import { usePlano } from '../../hooks/usePlano.js'
 import { useAuth } from '../../hooks/useAuth.jsx'

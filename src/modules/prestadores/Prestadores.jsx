@@ -1,3 +1,4 @@
+'use client'
 import { useState, useMemo } from 'react'
 import { usePrestadores } from '../../hooks/usePrestadores.js'
 import { useAuth } from '../../hooks/useAuth.jsx'

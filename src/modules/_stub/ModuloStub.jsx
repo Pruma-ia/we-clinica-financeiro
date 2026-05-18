@@ -1,3 +1,4 @@
+'use client'
 import PageHeader from '../../components/layout/PageHeader.jsx'
 import Card from '../../components/ui/Card.jsx'
 import { TEAL, SUB, TEALL } from '../../constants/colors.js'

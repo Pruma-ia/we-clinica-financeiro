@@ -1,3 +1,4 @@
+'use client'
 import { useEffect } from 'react'
 import { signOut } from '../../lib/auth.js'
 import { useAuth } from '../../hooks/useAuth.jsx'

@@ -1,3 +1,4 @@
+'use client'
 import { TXT, SUB, BDR, WHITE, RED } from '../../constants/colors.js'
 
 const labelStyle = { fontSize: 13, color: TXT, fontWeight: 500, marginBottom: 6, display: 'block' }

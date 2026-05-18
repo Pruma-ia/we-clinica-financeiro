@@ -1,3 +1,4 @@
+'use client'
 import { WHITE, BDR } from '../../constants/colors.js'
 
 export default function Card({ children, style = {} }) {
