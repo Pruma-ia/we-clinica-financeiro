@@ -1,22 +1,19 @@
+import { auth } from './lib/auth-config.js'
 import { NextResponse } from 'next/server'
 
-export function middleware(request) {
-  const token = request.cookies.get('authjs.session-token')
-    || request.cookies.get('__Secure-authjs.session-token')
+export default auth((req) => {
+  const isLoggedIn = !!req.auth
+  const isLoginPage = req.nextUrl.pathname === '/login'
 
-  if (!token && request.nextUrl.pathname !== '/login') {
-    return NextResponse.redirect(new URL('/login', request.url))
+  if (!isLoggedIn && !isLoginPage) {
+    return NextResponse.redirect(new URL('/login', req.nextUrl))
   }
 
-  if (token && request.nextUrl.pathname === '/login') {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+  if (isLoggedIn && isLoginPage) {
+    return NextResponse.redirect(new URL('/dashboard', req.nextUrl))
   }
-
-  return NextResponse.next()
-}
+})
 
 export const config = {
-  matcher: [
-    '/((?!api/auth|_next/static|_next/image|favicon.ico).*)',
-  ],
+  matcher: ['/((?!api/auth|_next/static|_next/image|favicon.ico).*)'],
 }
