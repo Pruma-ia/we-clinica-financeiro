@@ -31,8 +31,15 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
 **Plans:** 2 plans
 
 Plans:
+**Wave 1:**
 - [ ] 01-01-PLAN.md — Provisionar Supabase + Google OAuth + Vercel (manual provisioning gates)
+
+**Wave 2** *(blocked on Wave 1 completion)*:
 - [ ] 01-02-PLAN.md — Validar wiring env vars + verificação end-to-end do fluxo OAuth
+
+**Cross-cutting constraints:**
+- Supabase Auth URL config must include Vercel production URL (wired across waves)
+- .env.local must be populated before Wave 2 executes
 
 ### Phase 2: Visual Overhaul (Pruma Design System)
 **Mode:** mvp

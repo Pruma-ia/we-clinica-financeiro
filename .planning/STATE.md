@@ -14,12 +14,12 @@
 ## Current Position
 
 - **Phase**: 1 — Infrastructure & Auth
-- **Plan**: (none yet — pending `/gsd:plan-phase 1`)
-- **Status**: Not started
+- **Plan**: 2 plans in 2 waves — ready to execute
+- **Status**: Planned
 - **Progress**: ░░░░░░░░░░ 0% (0/2 phases)
 
 ```
-Phase 1 [          ] 0%  — Infrastructure & Auth
+Phase 1 [█░░░░░░░░░] 10% — Infrastructure & Auth (planned)
 Phase 2 [          ] 0%  — Visual Overhaul (Pruma Design System)
 ```
 
@@ -45,8 +45,9 @@ Phase 2 [          ] 0%  — Visual Overhaul (Pruma Design System)
 
 ### Todos
 
-- [ ] Phase 1 plan ainda não criado — rodar `/gsd:plan-phase 1`.
-- [ ] Phase 2 plan TBD após Phase 1.
+- [x] Phase 1 plan criado — 2 planos, 2 waves.
+- [ ] Executar Phase 1 — rodar `/gsd:execute-phase 1`.
+- [ ] Phase 2 plan TBD após Phase 1 executada.
 
 ### Blockers
 
@@ -61,8 +62,8 @@ Phase 2 [          ] 0%  — Visual Overhaul (Pruma Design System)
 
 ## Session Continuity
 
-- **Last action**: Roadmap created (2 phases, 100% coverage).
-- **Next action**: `/gsd:plan-phase 1` para detalhar Phase 1 (Infrastructure & Auth).
+- **Last action**: Phase 1 planned (2 plans, 2 waves — verification passed).
+- **Next action**: `/gsd:execute-phase 1` para provisionar infra e validar OAuth.
 - **Files of interest**:
   - `.planning/PROJECT.md`
   - `.planning/REQUIREMENTS.md`
