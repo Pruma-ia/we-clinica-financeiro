@@ -1,3 +1,17 @@
+---
+gsd_state_version: 1.0
+milestone: v1.0
+milestone_name: milestone
+status: unknown
+last_updated: "2026-05-18T17:41:24.065Z"
+progress:
+  total_phases: 2
+  completed_phases: 0
+  total_plans: 2
+  completed_plans: 1
+  percent: 0
+---
+
 # State: We Clínica — Sistema Financeiro
 
 **Last updated:** 2026-05-17
