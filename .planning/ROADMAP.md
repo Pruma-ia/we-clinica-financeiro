@@ -12,7 +12,7 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
 
 ## Phases
 
-- [ ] **Phase 1: Infrastructure & Auth** — Supabase + Vercel provisionados, Google OAuth end-to-end funcional com whitelist
+- [x] **Phase 1: Infrastructure & Auth** — Supabase + Vercel provisionados, Google OAuth end-to-end funcional com whitelist (completed 2026-05-18)
 - [ ] **Phase 2: Visual Overhaul (Pruma Design System)** — Tailwind instalado, tokens Pruma aplicados em login, sidebar, layout e componentes
 
 ## Phase Details
@@ -28,14 +28,14 @@ Brownfield React + Vite SPA com 15 módulos financeiros já scaffolded. Caminho 
   3. Usuário Google fora da whitelist (`usuarios_permitidos.ativo=true`) é bloqueado antes de acessar o app.
   4. Banco Supabase tem todas as migrations aplicadas e a tabela `usuarios_permitidos` contém ao menos um admin ativo.
   5. Variáveis de ambiente Supabase estão configuradas no Vercel e cada push em `main` dispara deploy automático.
-**Plans:** 2 plans
+**Plans:** 2/2 plans complete
 
 Plans:
 **Wave 1:**
-- [ ] 01-01-PLAN.md — Provisionar Supabase + Google OAuth + Vercel (manual provisioning gates)
+- [x] 01-01-PLAN.md — Provisionar Supabase + Google OAuth + Vercel (manual provisioning gates)
 
 **Wave 2** *(blocked on Wave 1 completion)*:
-- [ ] 01-02-PLAN.md — Validar wiring env vars + verificação end-to-end do fluxo OAuth
+- [x] 01-02-PLAN.md — Validar wiring env vars + verificação end-to-end do fluxo OAuth
 
 **Cross-cutting constraints:**
 - Supabase Auth URL config must include Vercel production URL (wired across waves)
@@ -59,7 +59,7 @@ Plans:
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Infrastructure & Auth | 0/2 | In progress | - |
+| 1. Infrastructure & Auth | 2/2 | Complete   | 2026-05-18 |
 | 2. Visual Overhaul (Pruma Design System) | 0/0 | Not started | - |
 
 ## Coverage
