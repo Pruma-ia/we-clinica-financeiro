@@ -3,9 +3,11 @@ import Google from 'next-auth/providers/google'
 import { createClient } from '@supabase/supabase-js'
 import { SignJWT } from 'jose'
 
+// Phase 3: placeholder fallbacks so module loads in Vercel without SUPABASE_* vars.
+// Phase 4 replaces this entire file with Drizzle-based auth.
 const supabaseAdmin = createClient(
-  process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://placeholder.supabase.co',
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'placeholder-key'
 )
 
 async function makeSupabaseToken(email, sub) {
