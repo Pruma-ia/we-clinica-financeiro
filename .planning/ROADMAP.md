@@ -59,8 +59,8 @@
 **Plans**: 4 plans
 
   **Wave 1** *(parallel)*
-  - [ ] 04-01-PLAN.md — Tailwind v3 + next/font (Barlow + Inter) + root layout cleanup
-  - [ ] 04-02-PLAN.md — Auth rewrite: Drizzle-based src/lib/auth.ts, TS middleware, Providers cleanup, env-var docs
+  - [x] 04-01-PLAN.md — Tailwind v3 + next/font (Barlow + Inter) + root layout cleanup
+  - [x] 04-02-PLAN.md — Auth rewrite: Drizzle-based src/lib/auth.ts, TS middleware, Providers cleanup, env-var docs
 
   **Wave 2** *(blocked on Wave 1 completion)*
   - [ ] 04-03-PLAN.md — /login route: (auth) group layout + Server page + GoogleButton client + OAuth checkpoint
@@ -107,7 +107,7 @@
 | 1. Infrastructure & Auth | v1.0 | 2/2 | Complete | 2026-05-18 |
 | 2. Visual Overhaul | v1.0 | 0/0 | Not started | - |
 | 3. Foundation | v2.0 | 0/0 | Not started | - |
-| 4. Auth | v2.0 | 0/0 | Not started | - |
+| 4. Auth | v2.0 | 2/4 | In Progress|  |
 | 5. Design System | v2.0 | 0/0 | Not started | - |
 | 6. Module Port | v2.0 | 0/0 | Not started | - |
 
