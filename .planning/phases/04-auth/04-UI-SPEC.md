@@ -5,6 +5,7 @@ status: draft
 shadcn_initialized: false
 preset: none
 created: 2026-05-19
+revised: 2026-05-18
 ---
 
 # Phase 4 — UI Design Contract (Auth)
@@ -27,7 +28,7 @@ created: 2026-05-19
 | Preset | not applicable |
 | Component library | none (componentes inline com classes Tailwind — somente 2 telas, primitivos serão criados na Phase 5) |
 | Icon library | `lucide-react` (oficial Pruma — `Loader2`, `LogOut`, `ShieldAlert`, `Mail`) |
-| Font | Barlow (headings) + Inter (body) — substituem DM Sans atual do `layout.tsx` |
+| Font | Barlow (headings/display) + Inter (body/label) — substituem DM Sans atual do `layout.tsx` |
 
 **Decisões de fundação:**
 
@@ -44,31 +45,37 @@ Sistema base 4px (Tailwind padrão, consistente com Pruma `MASTER.md`).
 | Token | Value | Usage |
 |-------|-------|-------|
 | xs | 4px (`p-1`, `gap-1`) | Gap entre ícone e label dentro do botão |
-| sm | 8px (`p-2`, `gap-2`) | Gap entre linhas dentro do bloco "email + mensagem" no AcessoNegado |
-| md | 16px (`p-4`, `gap-4`) | Padding interno de input/botão |
+| sm | 8px (`p-2`, `gap-2`, `py-2`) | Gap interno, padding vertical de badge de email |
+| md | 16px (`p-4`, `gap-4`, `px-4`) | Padding interno de input/botão, padding horizontal de badge |
 | lg | 24px (`p-6`, `gap-6`) | Gap entre logo-text, título e botão dentro do cartão |
 | xl | 32px (`p-8`) | Padding do cartão glassmorphism (`p-8 md:p-10`) |
 | 2xl | 48px (`p-12`) | Padding lateral do viewport no breakpoint desktop |
 | 3xl | 64px (`p-16`) | Não usado nesta phase |
 
 **Exceptions:**
-- Altura mínima do botão Google: **48px** (`h-12`) — alvo de clique confortável em desktop e atende WCAG mesmo sem suporte a mobile.
-- Largura do cartão: `max-w-md` (448px) — proporção visual recomendada por Pruma para formulários focais.
+- Altura mínima do botão Google: **48px** (`h-12`) — alvo de clique confortável em desktop e atende WCAG mesmo sem suporte a mobile. Múltiplo de 4 — exceção apenas por ser um valor único declarado como dimensão de componente.
+- Largura do cartão: `max-w-md` (448px) — proporção visual recomendada por Pruma para formulários focais. Múltiplo de 4 — declarado como dimensão de container.
+
+**Regra:** Todos os paddings/gaps usam apenas valores da escala acima (múltiplos de 4 alinhados ao Tailwind nativo). Nenhum `py-1.5`, `py-0.5`, ou `px-3` em componentes desta phase — qualquer compactação visual usa o próximo step da escala (sm → md).
 
 ---
 
 ## Typography
 
-Famílias: **Barlow** para títulos (`font-heading`), **Inter** para body (`font-sans`). Carregadas via `next/font/google` em `src/app/layout.tsx`.
+Famílias: **Barlow** para títulos/display (`font-heading`), **Inter** para body/label (`font-sans`). Carregadas via `next/font/google` em `src/app/layout.tsx`.
+
+**Pesos declarados (apenas 2):**
+- **400** (`font-normal`) — usado em todo texto Inter (body, label, helper, footer)
+- **700** (`font-bold`) — usado em todo texto Barlow (display, heading)
+
+A distinção visual entre marca/título e corpo vem da **família** (Barlow vs Inter) e do **tamanho**, não de pesos intermediários. Isto reduz o footprint de fonte carregada e reforça hierarquia por contraste de família.
 
 | Role | Size | Weight | Line Height | Usage |
 |------|------|--------|-------------|-------|
 | Display (logo "We Clínica") | 28px (`text-[28px]`) | 700 (`font-bold`) Barlow | 1.2 (`leading-tight`) | Marca textual no topo do cartão (ambas as telas) |
-| Heading (h1 da tela) | 24px (`text-2xl`) | 600 (`font-semibold`) Barlow | 1.25 (`leading-snug`) | "Bem-vindo de volta" / "Acesso não autorizado" |
+| Heading (h1 da tela) | 24px (`text-2xl`) | 700 (`font-bold`) Barlow | 1.25 (`leading-snug`) | "Bem-vindo de volta" / "Acesso não autorizado" |
 | Body (parágrafo de apoio) | 16px (`text-base`) | 400 (`font-normal`) Inter | 1.5 (`leading-normal`) | Sub-headline e mensagem explicativa |
-| Label/Caption (rodapé do cartão, email destacado) | 14px (`text-sm`) | 500 (`font-medium`) Inter | 1.5 | Footer "We Clínica · Sistema Financeiro" e badge de email em AcessoNegado |
-
-**Pesos declarados (apenas 3):** 400 (Inter regular), 500 (Inter medium), 600/700 (Barlow semibold/bold). Não usar 800/900.
+| Label/Caption (rodapé do cartão, email destacado) | 14px (`text-sm`) | 400 (`font-normal`) Inter | 1.5 | Footer "We Clínica · Sistema Financeiro" e badge de email em AcessoNegado |
 
 **Cor do texto sobre fundo navy gradient (fora do cartão):** branco puro `#FFFFFF` para display, `rgba(255,255,255,0.7)` para texto secundário.
 
@@ -136,7 +143,7 @@ Todo texto em **português brasileiro (pt-BR)**. Tom: profissional, direto, acol
 | Ícone (topo do cartão) | `ShieldAlert` (24px, cor `#DC2626`) dentro de círculo `bg-red-50 size-12` |
 | Heading (h1) | `Acesso não autorizado` |
 | Body (p) | `Sua conta Google não está na lista de usuários autorizados da We Clínica.` |
-| Email destacado (badge) | `{user.email}` — exibido em pílula `bg-white/40 border-white/30 text-[#0D1B4B] font-medium text-sm rounded-full px-3 py-1.5` com ícone `Mail` 14px à esquerda |
+| Email destacado (badge) | `{user.email}` — exibido em pílula `bg-white/40 border-white/30 text-[#0D1B4B] font-normal text-sm rounded-full px-4 py-2 inline-flex items-center gap-2` com ícone `Mail` 14px à esquerda |
 | Instrução (p) | `Se você acredita que deveria ter acesso, fale com o administrador do sistema para incluir seu email.` |
 | Link inline (na instrução) | `fale com o administrador` → `mailto:marcelo.mattioli@pruma.io` (admin atual seedado em DB-03) |
 | Primary CTA (botão) | `Sair e tentar com outra conta` (com ícone `LogOut` 16px à esquerda) |
@@ -165,7 +172,7 @@ Cada elemento interativo precisa de 4 estados explícitos:
 
 | Estado | Spec |
 |--------|------|
-| Default | `bg-white text-[#1F1F1F] border border-white/40 shadow-lg shadow-black/20 h-12 px-6 rounded-lg w-full font-medium text-base flex items-center justify-center gap-3` — ícone Google SVG colorido oficial (18px) à esquerda |
+| Default | `bg-white text-[#1F1F1F] border border-white/40 shadow-lg shadow-black/20 h-12 px-6 rounded-lg w-full font-normal text-base flex items-center justify-center gap-3` — ícone Google SVG colorido oficial (18px) à esquerda |
 | Hover | `hover:bg-white/95 hover:shadow-xl hover:-translate-y-px transition-all duration-150` |
 | Focus-visible | `focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00AEEF] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D1B4B]` |
 | Active | `active:translate-y-0 active:shadow-md` |
@@ -223,8 +230,8 @@ Mesma spec do botão Google, **exceto**:
 ### Hierarquia vertical dentro do cartão (`/login`)
 
 ```
-1. Marca textual (28px Barlow 700) + subtítulo (14px Inter 500 white/70)  → gap-6 abaixo
-2. h1 "Bem-vindo de volta" (24px Barlow 600)                              → gap-2 abaixo
+1. Marca textual (28px Barlow 700) + subtítulo (14px Inter 400 white/70)  → gap-6 abaixo
+2. h1 "Bem-vindo de volta" (24px Barlow 700)                              → gap-2 abaixo
 3. p sub-headline (16px Inter 400)                                         → gap-8 abaixo
 4. Botão "Continuar com Google" (h-12 full-width)                          → gap-4 abaixo
 5. Helper text (14px Inter 400 slate-500) — opcional, centralizado
@@ -234,9 +241,9 @@ Mesma spec do botão Google, **exceto**:
 
 ```
 1. Ícone ShieldAlert dentro de círculo bg-red-50 (size-12, centralizado)   → gap-6 abaixo
-2. h1 "Acesso não autorizado" (24px Barlow 600, centralizado)              → gap-2 abaixo
+2. h1 "Acesso não autorizado" (24px Barlow 700, centralizado)              → gap-2 abaixo
 3. p mensagem principal (16px Inter 400, centralizado)                     → gap-4 abaixo
-4. Badge do email (pílula com ícone Mail, centralizada)                    → gap-4 abaixo
+4. Badge do email (pílula px-4 py-2 com ícone Mail, centralizada)          → gap-4 abaixo
 5. p instrução com link inline (14px Inter 400, centralizado, leading-relaxed) → gap-8 abaixo
 6. Botão "Sair e tentar com outra conta" (full-width, variant glass)
 ```
@@ -293,7 +300,7 @@ Phase 4 é a primeira página interativa pública — orçamento agressivo (Prum
 | LCP | < 2.5s (cartão é o LCP element) |
 | CLS | < 0.05 (fontes via `next/font` com `display=swap` + `adjustFontFallback`) |
 | JS bundle (`/login` route) | < 80kb gzipped — sem libs extras além de next-auth/react |
-| Fontes carregadas | Apenas Barlow 600/700 e Inter 400/500 (4 weights total). Não carregar 100/200/300/800/900. |
+| Fontes carregadas | Apenas Barlow 700 e Inter 400 (**2 weights total**). Não carregar 100/200/300/500/600/800/900. |
 | Imagens | **Zero arquivos de imagem** — logo é textual, ícone Google é SVG inline, ícones lucide são tree-shaken |
 
 `use client` apenas no componente do botão (precisa de `signIn()` interativo). Toda a estrutura do cartão e textos são Server Components.
@@ -311,7 +318,7 @@ Quando o executor implementar esta phase, os seguintes arquivos devem existir e 
 | `src/app/(auth)/acesso-negado/page.tsx` | Server Component — recebe email da sessão, renderiza cartão |
 | `src/app/(auth)/acesso-negado/sign-out-button.tsx` | Client Component — `'use client'`, chama `signOut()` |
 | `src/app/(auth)/layout.tsx` | Layout do grupo `(auth)` — aplica gradient + blobs + footer (compartilhado por ambas as telas) |
-| `src/app/layout.tsx` | **MODIFICAR**: remover `<link>` DM Sans, adicionar `next/font/google` para Barlow + Inter, trocar `background: '#F3F2ED'` por classes Tailwind |
+| `src/app/layout.tsx` | **MODIFICAR**: remover `<link>` DM Sans, adicionar `next/font/google` para Barlow (700) + Inter (400), trocar `background: '#F3F2ED'` por classes Tailwind |
 | `tailwind.config.ts` | **NOVO**: config mínima Phase 4 (content paths + fonts) — config completa de tokens Pruma é Phase 5 |
 | `postcss.config.js` | **NOVO**: tailwindcss + autoprefixer |
 | `src/app/globals.css` | **NOVO**: `@tailwind base; @tailwind components; @tailwind utilities;` |
@@ -333,8 +340,8 @@ Quando o executor implementar esta phase, os seguintes arquivos devem existir e 
 - [ ] Dimension 1 Copywriting: PASS — todos textos em pt-BR, CTA específica, empty/error definidos
 - [ ] Dimension 2 Visuals: PASS — glassmorphism + navy gradient + 4 estados por interativo
 - [ ] Dimension 3 Color: PASS — 60/30/10 (navy/glass/cyan), accent reservado a 4 elementos específicos
-- [ ] Dimension 4 Typography: PASS — Barlow + Inter, 4 roles, 3 pesos (400/500/600/700 Barlow conta como família única)
-- [ ] Dimension 5 Spacing: PASS — escala base 4px, exceções declaradas (h-12 botão, max-w-md cartão)
+- [ ] Dimension 4 Typography: PASS — Barlow + Inter, 4 roles, **2 pesos** (400 Inter + 700 Barlow) — distinção hierárquica por família/tamanho, não por peso
+- [ ] Dimension 5 Spacing: PASS — escala base 4px (xs/sm/md/lg/xl/2xl), badge de email em `px-4 py-2` (md/sm), nenhum `py-1.5`/`px-3`, exceções declaradas (h-12 botão, max-w-md cartão)
 - [ ] Dimension 6 Registry Safety: PASS — sem registries de terceiros, lucide é npm padrão
 
 **Approval:** pending
