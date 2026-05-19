@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: executing
-last_updated: "2026-05-19T00:28:59.462Z"
-last_activity: 2026-05-19 -- 03-01 complete (pnpm + TypeScript foundation)
+last_updated: "2026-05-19T00:43:09Z"
+last_activity: 2026-05-19 -- 03-02 complete (Drizzle schema + Neon client)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 1
-  percent: 20
+  completed_plans: 2
+  percent: 40
 ---
 
 # State: We Clinica -- Sistema Financeiro
@@ -27,11 +27,11 @@ progress:
 ## Current Position
 
 Phase: 3 of 6 (Foundation)
-Plan: 03-01 complete
-Status: Executing — 03-02 next
-Last activity: 2026-05-19 -- 03-01 complete (pnpm + TypeScript foundation)
+Plan: 03-02 complete
+Status: Executing — 03-03 next (Neon provision checkpoint)
+Last activity: 2026-05-19 -- 03-02 complete (Drizzle schema + Neon client)
 
-Progress: [██░░░░░░░░] 20%
+Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
@@ -45,6 +45,9 @@ Progress: [██░░░░░░░░] 20%
 | 03-01 duration | ~25 min |
 | 03-01 tasks | 3/3 |
 | 03-01 files | 6 created, 3 deleted |
+| 03-02 duration | ~15 min |
+| 03-02 tasks | 3/3 |
+| 03-02 files | 3 created, 1 modified |
 
 ## Accumulated Context
 
@@ -60,7 +63,8 @@ Progress: [██░░░░░░░░] 20%
 
 - [x] Planejar Phase 3 -- `/gsd:plan-phase 3`
 - [x] 03-01 completo -- pnpm + TypeScript strict mode + entry files portados
-- [ ] 03-02 -- Drizzle schema + Neon migration
+- [x] 03-02 completo -- Drizzle schema (8 tabelas + D-08 renames) + Neon client + drizzle-kit config
+- [ ] 03-03 -- Neon provision checkpoint (gate externo)
 
 ### Blockers
 
@@ -69,14 +73,13 @@ Progress: [██░░░░░░░░] 20%
 
 ## Session Continuity
 
-- **Last action**: 03-01 executado -- pnpm migrado, tsconfig strict criado, 3 entry files portados para TS.
-- **Next action**: Executar 03-02 (Drizzle schema + Neon connection).
+- **Last action**: 03-02 executado -- Drizzle schema com 8 tabelas, Neon client singleton, drizzle-kit config, .env.example atualizado.
+- **Next action**: Executar 03-03 (Neon provision checkpoint -- gate externo).
 - **Files of interest**:
-  - `.planning/phases/03-foundation/03-01-SUMMARY.md` -- execução 03-01
-  - `.planning/phases/03-foundation/03-CONTEXT.md` -- decisões Phase 3
-  - `src/app/layout.tsx`, `src/app/page.tsx`, `middleware.ts` -- entry files portados
-  - `tsconfig.json` -- strict TS config com @/* alias
-  - `supabase/schema.sql` -- schema de referência para tradução Drizzle (próximo: 03-02)
+  - `.planning/phases/03-foundation/03-02-SUMMARY.md` -- execução 03-02
+  - `src/db/schema.ts` -- Drizzle schema com D-08 renames
+  - `src/lib/db.ts` -- Neon serverless + Drizzle client singleton
+  - `drizzle.config.ts` -- drizzle-kit config (usado em Plan 04 push)
 
 ---
 *State updated: 2026-05-18 after v2.0 roadmap creation*
