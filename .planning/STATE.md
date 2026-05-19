@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: executing
 last_updated: "2026-05-19T01:30:00Z"
-last_activity: 2026-05-19 -- 03-04 complete (Schema Neon applied + seed data)
+last_activity: 2026-05-19 -- Phase 03 complete (production deploy Ready at Vercel)
 progress:
   total_phases: 4
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 5
-  completed_plans: 4
-  percent: 80
+  completed_plans: 5
+  percent: 25
 ---
 
 # State: We Clinica -- Sistema Financeiro
