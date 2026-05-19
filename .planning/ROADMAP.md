@@ -56,7 +56,21 @@
   2. Sessão persiste após refresh do navegador (usuário não precisa logar novamente)
   3. Usuário com email fora da whitelist (`usuarios_permitidos.ativo=true`) vê a tela "Acesso Negado" estilizada com Pruma
   4. Qualquer rota autenticada redireciona para `/login` quando acessada sem sessão ativa (middleware Next.js)
-**Plans**: TBD
+**Plans**: 4 plans
+
+  **Wave 1** *(parallel)*
+  - [ ] 04-01-PLAN.md — Tailwind v3 + next/font (Barlow + Inter) + root layout cleanup
+  - [ ] 04-02-PLAN.md — Auth rewrite: Drizzle-based src/lib/auth.ts, TS middleware, Providers cleanup, env-var docs
+
+  **Wave 2** *(blocked on Wave 1 completion)*
+  - [ ] 04-03-PLAN.md — /login route: (auth) group layout + Server page + GoogleButton client + OAuth checkpoint
+
+  **Wave 3** *(blocked on Wave 2 completion)*
+  - [ ] 04-04-PLAN.md — /acesso-negado route: Server page reading email from searchParams + SignOutButton + negative-path checkpoint
+
+  **Cross-cutting constraints:**
+  - AUTH_* env vars must be configured in Vercel before human checkpoint in 04-03 can pass
+  - Google OAuth credentials must point to the correct Vercel domain
 **UI hint**: yes
 
 ### Phase 5: Design System
