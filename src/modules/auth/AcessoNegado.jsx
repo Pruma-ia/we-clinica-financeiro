@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { signOut } from '../../lib/auth.js'
+import { signOut } from 'next-auth/react'
 import { useAuth } from '../../hooks/useAuth.jsx'
 import { COAL, RED, REDL, WHITE, SUB, BDR } from '../../constants/colors.js'
 import Btn from '../../components/ui/Btn.jsx'

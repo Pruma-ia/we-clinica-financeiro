@@ -1,5 +1,5 @@
 'use server'
-import { auth } from '../../lib/auth-config.js'
+import { auth } from '../../lib/auth.ts'
 import { createClient } from '@supabase/supabase-js'
 import { getPaymentFriday } from '../../utils/datas.js'
 import { buildComissaoLanc } from '../../utils/calcComissao.js'
