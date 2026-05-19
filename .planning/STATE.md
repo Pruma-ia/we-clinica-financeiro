@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: executing
-last_updated: "2026-05-19T03:00:00.000Z"
-last_activity: 2026-05-19 -- Phase 4 planned (4 plans, 3 waves)
+last_updated: "2026-05-19T12:08:00Z"
+last_activity: 2026-05-19 -- Phase 4 Plan 01 complete (Tailwind v3 + next/font)
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 9
-  completed_plans: 5
-  percent: 25
+  completed_plans: 7
+  percent: 44
 ---
 
 # State: We Clinica -- Sistema Financeiro
@@ -27,11 +27,11 @@ progress:
 ## Current Position
 
 Phase: 4 of 6 (Auth)
-Plan: Phase 4 planned — ready to execute
-Status: Ready to execute Phase 4 (4 plans, 3 waves)
-Last activity: 2026-05-19 -- Phase 4 planned (4 plans, 3 waves)
+Plan: 1 of 4 complete (04-01 Tailwind + next/font)
+Status: Executing Phase 4 — Plan 04-02 next
+Last activity: 2026-05-19 -- 04-01 complete (Tailwind v3.4.17 + Barlow+Inter via next/font)
 
-Progress: [████░░░░░░] 40%
+Progress: [████░░░░░░] 44%
 
 ## Performance Metrics
 
@@ -48,6 +48,9 @@ Progress: [████░░░░░░] 40%
 | 03-02 duration | ~15 min |
 | 03-02 tasks | 3/3 |
 | 03-02 files | 3 created, 1 modified |
+| 04-01 duration | ~7 min |
+| 04-01 tasks | 3/3 |
+| 04-01 files | 3 created, 6 modified |
 
 ## Accumulated Context
 
@@ -58,6 +61,9 @@ Progress: [████░░░░░░] 40%
 - Drizzle ORM (nao Prisma). Leve, SQL-like, excelente com Neon serverless driver.
 - Banco limpo -- schema recriado com Drizzle migrations, sem migracao de dados.
 - Phase 4 entrega auth como vertical slice completo (funcional + visual), diferente de v1.0 que separou.
+- ESM postcss.config.js obrigatório (projeto usa "type": "module") — module.exports causaria SyntaxError.
+- Tailwind v3.4.17 (não v4) — UI-SPEC proíbe v4; config format incompatível.
+- next/font self-hosted: Barlow 700 (--font-heading) + Inter 400 (--font-sans), 2 weights apenas.
 
 ### Todos
 
@@ -68,6 +74,7 @@ Progress: [████░░░░░░] 40%
 - [x] 03-04 completo -- Schema aplicado ao Neon (7 tabelas + 7 índices), seed data (14 plano_contas + 8 premissas + admin)
 - [x] 03-05 completo -- vercel.ts atualizado, deploy produção em `https://we-clinica-financeiro.vercel.app`
 - [x] Phase 4 planejada -- 4 planos (04-01 a 04-04), 3 waves
+- [x] 04-01 completo -- Tailwind v3.4.17 + PostCSS + next/font Barlow+Inter
 
 ### Blockers
 
@@ -76,8 +83,8 @@ Progress: [████░░░░░░] 40%
 
 ## Session Continuity
 
-- **Last action**: Phase 4 planejada -- 4 planos (Tailwind setup, auth rewrite, login page, acesso-negado).
-- **Next action**: Executar Phase 4 -- `/gsd:execute-phase 4`.
+- **Last action**: 04-01 completo -- Tailwind v3.4.17 + next/font Barlow+Inter instalados e verificados.
+- **Next action**: Executar Plan 04-02 -- auth.ts rewrite + middleware.
 - **Files of interest**:
   - `.planning/phases/04-auth/04-01-PLAN.md` -- Tailwind v3 + next/font
   - `.planning/phases/04-auth/04-02-PLAN.md` -- auth.ts + middleware.ts
