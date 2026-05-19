@@ -9,7 +9,7 @@ if (!databaseUrl) {
   console.warn('[db] DATABASE_URL ausente em .env')
 }
 
-export const sql = neon(databaseUrl ?? 'postgres://placeholder')
+export const sql = neon(databaseUrl ?? 'postgresql://placeholder:placeholder@placeholder.neon.tech/placeholder')
 export const db = drizzle(sql, { schema })
 
 export type Database = typeof db
