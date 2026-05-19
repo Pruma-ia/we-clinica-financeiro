@@ -13,6 +13,7 @@ out
 
 # Next.js
 next-env.d.ts
+tsconfig.tsbuildinfo
 
 # cache
 .vite
