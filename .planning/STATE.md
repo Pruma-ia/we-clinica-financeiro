@@ -4,13 +4,13 @@ milestone: v2.0
 milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: executing
 last_updated: "2026-05-19T00:28:59.462Z"
-last_activity: 2026-05-19 -- Phase 03 planning complete
+last_activity: 2026-05-19 -- 03-01 complete (pnpm + TypeScript foundation)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 0
-  percent: 0
+  completed_plans: 1
+  percent: 20
 ---
 
 # State: We Clinica -- Sistema Financeiro
@@ -27,11 +27,11 @@ progress:
 ## Current Position
 
 Phase: 3 of 6 (Foundation)
-Plan: --
-Status: Ready to execute
-Last activity: 2026-05-19 -- Phase 03 planning complete
+Plan: 03-01 complete
+Status: Executing — 03-02 next
+Last activity: 2026-05-19 -- 03-01 complete (pnpm + TypeScript foundation)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [██░░░░░░░░] 20%
 
 ## Performance Metrics
 
@@ -42,6 +42,9 @@ Progress: [░░░░░░░░░░] 0%
 | v2.0 requirements | 27 |
 | Requirements mapped | 27 (100%) |
 | Requirements complete | 0 |
+| 03-01 duration | ~25 min |
+| 03-01 tasks | 3/3 |
+| 03-01 files | 6 created, 3 deleted |
 
 ## Accumulated Context
 
@@ -55,8 +58,9 @@ Progress: [░░░░░░░░░░] 0%
 
 ### Todos
 
-- [ ] Planejar Phase 3 -- `/gsd:plan-phase 3`
-- [ ] Executar Phase 3 -- provisionar Next.js + Neon + Drizzle + Vercel
+- [x] Planejar Phase 3 -- `/gsd:plan-phase 3`
+- [x] 03-01 completo -- pnpm + TypeScript strict mode + entry files portados
+- [ ] 03-02 -- Drizzle schema + Neon migration
 
 ### Blockers
 
@@ -65,13 +69,14 @@ Progress: [░░░░░░░░░░] 0%
 
 ## Session Continuity
 
-- **Last action**: Phase 3 context gathered -- 14 decisions captured across 4 areas (estrutura, TypeScript, schema, Neon).
-- **Next action**: `/gsd:plan-phase 3` para planejar Foundation.
+- **Last action**: 03-01 executado -- pnpm migrado, tsconfig strict criado, 3 entry files portados para TS.
+- **Next action**: Executar 03-02 (Drizzle schema + Neon connection).
 - **Files of interest**:
+  - `.planning/phases/03-foundation/03-01-SUMMARY.md` -- execução 03-01
   - `.planning/phases/03-foundation/03-CONTEXT.md` -- decisões Phase 3
-  - `.planning/ROADMAP.md` -- roadmap v2.0
-  - `.planning/REQUIREMENTS.md` -- 27 requirements v2.0
-  - `supabase/schema.sql` -- schema de referência para tradução Drizzle
+  - `src/app/layout.tsx`, `src/app/page.tsx`, `middleware.ts` -- entry files portados
+  - `tsconfig.json` -- strict TS config com @/* alias
+  - `supabase/schema.sql` -- schema de referência para tradução Drizzle (próximo: 03-02)
 
 ---
 *State updated: 2026-05-18 after v2.0 roadmap creation*
