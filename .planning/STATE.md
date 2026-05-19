@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Migra\xE7\xE3o Supabase → Neon + Next.js
 status: executing
-last_updated: "2026-05-19T00:43:09Z"
-last_activity: 2026-05-19 -- 03-02 complete (Drizzle schema + Neon client)
+last_updated: "2026-05-19T01:30:00Z"
+last_activity: 2026-05-19 -- 03-04 complete (Schema Neon applied + seed data)
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 5
-  completed_plans: 2
-  percent: 40
+  completed_plans: 4
+  percent: 80
 ---
 
 # State: We Clinica -- Sistema Financeiro
@@ -27,9 +27,9 @@ progress:
 ## Current Position
 
 Phase: 3 of 6 (Foundation)
-Plan: 03-02 complete
-Status: Executing — 03-03 next (Neon provision checkpoint)
-Last activity: 2026-05-19 -- 03-02 complete (Drizzle schema + Neon client)
+Plan: 03-04 complete
+Status: Executing — 03-05 next (CI/CD + Vercel deploy config)
+Last activity: 2026-05-19 -- 03-04 complete (Schema Neon applied + seed data)
 
 Progress: [████░░░░░░] 40%
 
@@ -64,22 +64,21 @@ Progress: [████░░░░░░] 40%
 - [x] Planejar Phase 3 -- `/gsd:plan-phase 3`
 - [x] 03-01 completo -- pnpm + TypeScript strict mode + entry files portados
 - [x] 03-02 completo -- Drizzle schema (8 tabelas + D-08 renames) + Neon client + drizzle-kit config
-- [ ] 03-03 -- Neon provision checkpoint (gate externo)
+- [x] 03-03 completo -- Neon provisionado, DATABASE_URL em .env.local, smoke test OK
+- [x] 03-04 completo -- Schema aplicado ao Neon (7 tabelas + 7 índices), seed data (14 plano_contas + 8 premissas + admin)
 
 ### Blockers
 
-- Neon database precisa ser provisionado (console.neon.tech) -- gate externo.
 - Google OAuth credentials precisam ser recriadas para o novo dominio Next.js.
 
 ## Session Continuity
 
-- **Last action**: 03-02 executado -- Drizzle schema com 8 tabelas, Neon client singleton, drizzle-kit config, .env.example atualizado.
-- **Next action**: Executar 03-03 (Neon provision checkpoint -- gate externo).
+- **Last action**: 03-04 executado -- Schema aplicado ao Neon, seed data (plano_contas + premissas + admin), unique constraint plano_contas_cod adicionada.
+- **Next action**: Executar 03-05 (CI/CD + Vercel deploy config).
 - **Files of interest**:
-  - `.planning/phases/03-foundation/03-02-SUMMARY.md` -- execução 03-02
-  - `src/db/schema.ts` -- Drizzle schema com D-08 renames
-  - `src/lib/db.ts` -- Neon serverless + Drizzle client singleton
-  - `drizzle.config.ts` -- drizzle-kit config (usado em Plan 04 push)
+  - `.planning/phases/03-foundation/03-04-SUMMARY.md` -- execução 03-04
+  - `src/db/schema.ts` -- Drizzle schema com unique constraint em plano_contas.cod
+  - `drizzle/0001_seed.sql` -- seed data idempotente
 
 ---
 *State updated: 2026-05-18 after v2.0 roadmap creation*
