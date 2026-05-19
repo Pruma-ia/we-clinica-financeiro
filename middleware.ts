@@ -1,4 +1,4 @@
-import { auth } from '@/lib/auth-config'
+import { auth } from '@/lib/auth'
 
 export default auth((req) => {
   const { pathname } = req.nextUrl
