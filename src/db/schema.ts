@@ -8,6 +8,7 @@ import {
   timestamp,
   index,
   check,
+  unique,
 } from 'drizzle-orm/pg-core'
 import { sql } from 'drizzle-orm'
 
@@ -88,7 +89,9 @@ export const planoContas = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).defaultNow(),
   },
   (table) => ({
-    checkTipo: check('plano_contas_tipo_check', sql`${table.tipo} IN ('receita','despesa')`),
+    checkTipo:  check('plano_contas_tipo_check', sql`${table.tipo} IN ('receita','despesa')`),
+    // D-08: cod é identificador único do plano (ex: '1.1', '2.1') — garante idempotência do seed
+    uniqueCod:  unique('plano_contas_cod_unique').on(table.cod),
   }),
 )
 
