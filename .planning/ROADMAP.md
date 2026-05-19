@@ -40,7 +40,12 @@
   3. App está acessível via URL pública do Vercel com build passando
   4. Push em `main` dispara deploy automático e PRs geram preview deploys no Vercel
   5. Tabela `usuarios_permitidos` contém ao menos um admin com `ativo=true`
-**Plans**: TBD
+**Plans**: 5 plans
+  - [ ] 03-01-PLAN.md — Migrate to pnpm + TypeScript strict; port root layout/page/middleware to TSX
+  - [ ] 03-02-PLAN.md — Drizzle schema (8 tables, D-08 renames), db.ts client, drizzle.config.ts
+  - [ ] 03-03-PLAN.md — User provisions Neon via Vercel Marketplace; .env.local + smoke test
+  - [ ] 03-04-PLAN.md — [BLOCKING] drizzle-kit push to Neon + seed (plano_contas, premissas, first admin)
+  - [ ] 03-05-PLAN.md — Update vercel.ts to pnpm; push to main; verify production + preview deploys
 
 ### Phase 4: Auth
 **Goal**: Usuários autorizados conseguem acessar o sistema via Google OAuth; não autorizados são bloqueados com feedback visual claro.
